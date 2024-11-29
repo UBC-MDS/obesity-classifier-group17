@@ -13,7 +13,7 @@ dependencies:
   - python=3.11
   - requests=2.31.0
   - scikit-learn=1.5.1
-  - conda-lock =2.5.7
+  - conda-lock=2.5.7
   - numpy=1.26.0
   - pip>=24.2
   - vegafusion-python-embed=1.4.3
