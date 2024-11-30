@@ -21,8 +21,4 @@ dependencies:
   - pandera=0.21.0
   - pip=24.3.1
   - pip:
-    - deepchecks==0.18.1
-
-
-  
-      
+      - deepchecks==0.18.1
