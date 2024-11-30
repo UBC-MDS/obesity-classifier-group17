@@ -4,7 +4,7 @@
 services:
   # run jupyter notebook inside jupyter
   jupyter-notebook:
-    image: zananpech/obesity-classifier-group17:54957a8
+    image: zananpech/obesity-classifier-group17:1d2c030
     ports:
       - "8888:8888"
     volumes:
