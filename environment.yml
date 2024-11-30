@@ -5,7 +5,6 @@ channels:
 dependencies:
   - jupyterlab>=3.5
   - matplotlib=3.9.2
-  - pandas=2.1.2
   - altair=5.1.2
   - ipykernel=6.26.0
   - notebook=6.5.4
@@ -19,6 +18,7 @@ dependencies:
   - vegafusion-python-embed=1.4.3
   - vegafusion=1.4.3
   - vl-convert-python=1.0.1
+  - pandera=0.21.0
   - pip:
       - transformers
       - ucimlrepo
