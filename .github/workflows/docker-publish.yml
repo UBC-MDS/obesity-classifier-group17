@@ -1,8 +1,10 @@
+# File below is adapted from work by Tiffany A. Timbers in dsci522-dockerfile-practice repository
+# https://github.com/ttimbers/dsci522-dockerfile-practice/blob/main/.github/workflows/docker-publish.yml
+
 # Publishes docker image, pinning actions to a commit SHA,
 # and updating most recently built image with the latest tag.
 # Can be triggered by either pushing a commit that changes the `Dockerfile`,
 # or manually dispatching the workflow.
-# Adapted from Tiffany A. Timbers's repository: https://github.com/ttimbers/breast-cancer-predictor
 
 name: Publish Docker image
 
