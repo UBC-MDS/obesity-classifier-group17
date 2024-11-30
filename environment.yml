@@ -14,10 +14,10 @@ dependencies:
   - scikit-learn=1.5.1
   - conda-lock=2.5.7
   - numpy=1.26.0
-  - pip>=24.2
   - vegafusion-python-embed=1.4.3
   - vegafusion=1.4.3
   - vl-convert-python=1.0.1
-  - pip:
-      - transformers
-      - ucimlrepo
+  - ucimlrepo==0.0.7
+  - pip=24.3.1
+  
+      
