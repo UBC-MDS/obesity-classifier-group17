@@ -9,7 +9,6 @@ dependencies:
   - altair=5.1.2
   - ipykernel=6.26.0
   - notebook=6.5.4
-  - pandas=2.1.2
   - python=3.11
   - requests=2.31.0
   - scikit-learn=1.5.1
