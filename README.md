@@ -2,61 +2,50 @@
 
 - author: Yun Zhou, Zanan Pech and Sepehr Heydarian
 
-Milestone 1 for DSCI 522 data workflows project
+Milestone 2 for DSCI 522 data workflows project
 
 ## About
 
-In this project we attempt to build a model to classify different levels of obesity. We trained and evaluated three machine learning models - K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost. Our evaluation showed that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy of ~97%.
+In this project we attempt to build a model to classify different levels of obesity. The obesity levels are categorized as Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. We trained and evaluated three machine learning models - K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost. Our evaluation showed that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy of ~97%. Although the accuracy of our KNN model is ~88%. These high scores reflect on the quality of data and analysis. With these promising scores, this model could potentially act as a useful tool in the healthcare industry to better help patients and healthcare professionals. 
 
-This dataset provides information on estimating obesity levels in individuals from Mexico, Peru, and Colombia, using data on their dietary habits and physical condition (Estimation of Obesity Levels Based On Eating Habits and Physical Condition, 2019). It includes 17 features and 2,111 entries, with each record categorized under the variable "NObesity" (Obesity Level), which classifies the data into categories such as Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. Of the total data, 77% was generated using the Weka tool with the SMOTE filter, while the remaining 23% was gathered from users via a web platform (Estimation of Obesity Levels Based On Eating Habits and Physical Condition, 2019).
+The dataset used is obtained from UC Irvine Machine Learning Repository - [Link here](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition). This dataset was used in work by Fabio Mendoza Palechor and  Alexis de la Hoz Manotas (Palechor, F. M., & De La Hoz Manotas, A., 2019). Find work [here](https://doi.org/10.1016/j.dib.2019.104344).The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia (Estimation of Obesity Levels Based On Eating Habits and Physical Condition, 2019). This dataset contains 24 duplicate rows which were dropped after data validation process. 
 
 ## Report
 
-The final report can be found [here] (https://github.com/UBC-MDS/obesity-classifier-group17/tree/main/notebooks)
+The final report can be found [here](https://github.com/UBC-MDS/obesity-classifier-group17/tree/main/notebooks)
 
 ## Usage
 
-Run the following for initial contribution to the project (environment found in root repository):
+Ensure Docker is installed - [Install from here](https://www.docker.com/)
+
+Clone the main branch of this repository: [Repository link](https://github.com/UBC-MDS/obesity-classifier-group17)
 
 ```bash
-conda-lock install --name obesity_classifier_group17 conda-lock.yml
+git clone https://github.com/UBC-MDS/obesity-classifier-group17
 ```
 
-Run the following for analysis:
+Once in the root directory of repository in local run the following command in terminal to open container. 
 
 ```bash
-jupyter lab
+docker compose up
 ```
+From the output of the above command in the terminal find the link to the container. See [image](https://github.com/UBC-MDS/obesity-classifier-group17/blob/main/img/container-weblaunch-url.png) as reference to find the url.
 
-Open `notebooks/obesity_level_predictor_report.ipynb` in Jupyter Lab
-and under Switch/Select Kernel choose
-"Python [conda env:obesity_classifier_group17]".
+Open URL and once in Jupyter Lab under the "Kernel" menu click "Restart Kernel and Run All Cells...".
 
-Next, under the "Kernel" menu click "Restart Kernel and Run All Cells...".
+For further work on the environment and updating dependencies use `environment.yml` file (found [here](https://github.com/UBC-MDS/obesity-classifier-group17/blob/main/environment.yml). Once file is updated with new dependencies run:
+```bash
+conda-lock -k explicit --file environment.yml -p linux-64
+```
+Push changes to main and on Github Actions > Publish Docker Image run the workflow. Find docker tag in new published image and update the `docker-compose.yml`.
 
 ## Dependencies
 
-- `jupyterlab` >=3.5
-- `matplotlib`=3.9.2
-- `pandas`=2.1.2
-- `altair`=5.1.2
-- `ipykernel`=6.26.0
-- `notebook`=6.5.4
-- `pandas`=2.1.2
-- `python`=3.11
-- `requests`=2.31.0
-- `scikit-learn`=1.5.1
-- `conda-lock`
-- `numpy`=1.26.0
-- `pip`>=24.2
-- `vegafusion-python-embed`=1.4.3
-- `vegafusion`=1.4.3
-- `vl-convert-python`=1.0.1
-- Python and packages listed in [`environment.yml`](environment.yml)
+[Docker](https://www.docker.com/)
+
 
 ## License
-
-The Obesity Classification Project report contained herein is licensed under the Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license. See the license file for more information. If re-using or sharing this report, please provide attribution and link to this repository. The software code contained within this repository is licensed under the MIT license. See the license file for more information.
+The Obesity Level Predictor project report is licensed under [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). For additional information visit license link. Follow guidelines when sharing this report highlighted in the license file when using and sharing this work,
 
 ## References
 
