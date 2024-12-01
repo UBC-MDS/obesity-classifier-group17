@@ -56,4 +56,4 @@ This project adheres to a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By 
 These contribution guidelines were inspired by the [dplyr contributing guidelines](https://github.com/tidyverse/dplyr/blob/master/.github/CONTRIBUTING.md) and the [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/).
 
 ### Reference Statement
-This md file is adapted by work from Tiffany A. Timbers in breast-cancer-predictor repository [CONTRIBUTING.md](https://github.com/ttimbers/breast-cancer-predictor/blob/1.0.0/CONTRIBUTING.md).
+This md file is adapted by work from Tiffany A. Timbers in breast-cancer-predictor repository CONTRIBUTING.md [link here](https://github.com/ttimbers/breast-cancer-predictor/blob/1.0.0/CONTRIBUTING.md)
