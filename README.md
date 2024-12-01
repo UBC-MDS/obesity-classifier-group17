@@ -45,7 +45,7 @@ Push changes to main and on Github Actions > Publish Docker Image and run the wo
 
 
 ## License
-The Obesity Level Predictor project report is licensed under [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). For additional information visit license link. Follow guidelines when sharing this report highlighted in the license file when using and sharing this work,
+The Obesity Level Predictor project report is licensed under [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). For additional information visit license link. Follow guidelines highlighted in the license file when using and sharing this work.
 
 ## References
 
