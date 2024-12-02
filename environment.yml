@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - jupyterlab>=3.5
+  - jupyterlab=3.5
   - matplotlib=3.9.2
   - pandas=2.1.2
   - altair=5.1.2
