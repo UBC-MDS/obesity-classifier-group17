@@ -20,5 +20,6 @@ dependencies:
   - ucimlrepo==0.0.7
   - pandera=0.21.0
   - pip=24.3.1
+  - click=8.1.7
   - pip:
       - deepchecks==0.18.1
