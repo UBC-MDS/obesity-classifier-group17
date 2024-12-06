@@ -1,17 +1,43 @@
-# Code below adapted from https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html
+# Code below is adapted from
+# https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html
+# validate_data.py
+# author: Zanan Pech & Sepehr Heydarian
+# date: 2024-12-06
 
-import pandas as pd
 import pandera as pa
 
 
 def validate_data(obesity_df):
 
-    # TODO: create docstring
+    """
+    Validates the data from the raw obesity dataset by using pandera library to 
+    create schemas.
+    Following validations are performed:
 
-    # 4. Check missingness not beyond expected threshold with "nullable"
-    # 5. Check correct data types in each column with "first parameter in pa.Column"
-    # 7. Check the outlier or anomalous values with "pa.Check.between"
-    # 8. Check category levels with "pa.Check.isin"
+    Check missingness not beyond expected threshold with "nullable"
+    Check correct data types in each column with "first parameter in pa.Column"
+    Check the outlier or anomalous values with "pa.Check.between"
+    Check category levels with "pa.Check.isin"
+    Check for duplicated observations 
+    Check for empty observations 
+
+    Parameters
+    ----------
+    obesity_df : pandas.DataFrame
+        The raw data frame containing obesity levels data.
+
+    Returns
+    ----------
+    pandas.DataFrame
+        A validated data frame is returned with the necessary changes such as dropping duplicate rows.
+        These changes do not pertain to the inputted data frame.
+    
+    Raises
+    ----------
+    pandera.errors.SchemaError
+        Error is raised if one of the checks is failed.
+    """
+    
     schema = pa.DataFrameSchema({
         "gender": pa.Column(str, pa.Check.isin(["Female", "Male"])),
         "age": pa.Column(float, pa.Check.between(10, 99), nullable=True),
@@ -33,14 +59,12 @@ def validate_data(obesity_df):
         "obesity_level": pa.Column(str, pa.Check.isin(['Normal_Weight', 'Overweight_Level_I', 'Overweight_Level_II',
         'Obesity_Type_I', 'Insufficient_Weight', 'Obesity_Type_II','Obesity_Type_III'])), 
         },
-
-        # 6. Check no duplicated observations 
-        # 3. Check the empty observations                     
+                   
         checks=[
             pa.Check(lambda df: ~df.duplicated().any(), error="Duplicate rows found."),
             pa.Check(lambda df: ~(df.isna().all(axis=1)).any(), error="Empty rows found.")
         ],
-        # Drop duplicate row
+
         drop_invalid_rows=True
     )
 
