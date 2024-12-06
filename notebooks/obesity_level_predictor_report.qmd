@@ -1,0 +1,694 @@
+---
+title: Predicting Obesity Level Based on Eating Habits and Physical Condition
+author: Yun Zhou, Zanan Pech, Sepehr Heydarian
+date: "2024/12/06"
+jupyter: python3
+format:
+    html:
+        toc: true
+        toc-depth: 2
+    pdf: 
+        toc: true
+        toc-depth: 2
+#bibliography: references.bib
+execute: 
+  echo: false
+  warning: false
+editor: source
+
+---
+
+
+
+```{python}
+# import libraries
+import numpy as np
+import pandas as pd
+import pandera as pa
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.compose import make_column_transformer, make_column_selector
+from sklearn.pipeline import make_pipeline
+from deepchecks.tabular import Dataset
+from deepchecks.tabular.checks import FeatureLabelCorrelation
+from deepchecks.tabular.checks.data_integrity import FeatureFeatureCorrelation
+```
+
+# Summary
+
+In this study, we aim to develop a classification model to determine whether an individual is obese and, if so, categorize the level of obesity. Three machine learning models—K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost—were trained and evaluated for their performance. The results indicate that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy, both around 97%, making them the most effective models for this classification task. In contrast, KNN exhibited comparatively lower performance, achieving an accuracy of 89%, demonstrating its inferiority relative to the other two models in this context.
+
+# Introduction
+
+Obesity, a complex and seemingly insurmountable public health and medical challenge, has become a global issue with severe negative impacts on both health and the economy (World Health Organization, 2023). This condition is associated with various medical and psychological complications, significantly affecting individuals' health and social well-being. The World Health Organization (WHO) defines obesity as an excessive accumulation of body fat that poses a risk to health (World Health Organization, 2023). To implement this definition in practice, body mass index (BMI)—a widely used indicator of body fat—is employed to classify obesity. Specifically, under WHO guidelines, individuals with a BMI exceeding 30 are categorized as obese (World Health Organization, 2023). Those living with obesity often face persistent stigma and discrimination, which further heightens their risk of disease and mortality (Westbury et al., 2023).
+
+Traditional methods for identifying and managing obesity often rely on clinical measurements like body mass index (BMI), which, while effective, can be time-consuming and resource-intensive (Han et al., 2006). Machine learning (ML), a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets (Frontiers in Endocrinology, 2022). By leveraging predictive models, ML can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity (Zhou et al., 2022).
+
+# Methods
+
+### Data
+
+The dataset used is obtained from UC Irvine Machine Learning Repository ([link here](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)). This dataset was used in work by Fabio Mendoza Palechor and  Alexis de la Hoz Manotas (Palechor, F. M., & De La Hoz Manotas, A., 2019). Find work [here](https://doi.org/10.1016/j.dib.2019.104344). The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia (Estimation of Obesity Levels Based On Eating Habits and Physical Condition, 2019). The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. This dataset contains 24 duplicate rows which were dropped after data validation process.
+
+
+### Analysis
+
+In this study, we trained three machine learning models—Decision Tree enhanced with AdaBoost, Support Vector Machine (SVM) with an RBF kernel, and K-Nearest Neighbors (KNN)—to predict obesity outcomes. The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. Each model underwent hyperparameter tuning to optimize its predictive capabilities, utilizing a grid search approach to explore various combinations of hyperparameters.
+
+For KNN, key hyperparameters such as the number of neighbors (n_neighbors), which were varied from 3 to 9, the weight function (uniform or distance), and the distance metric (euclidean or manhattan) were tested. These adjustments aimed to optimize how KNN classifies data points based on their proximity to others. The SVM model utilized a range of values for the regularization parameter (C), with values of 0.1, 1, 10, and 100 to balance classification error and margin maximization. Additionally, the kernel coefficient (gamma) was adjusted using options like 'scale', 'auto', and specific numeric values such as 0.01, 0.1, and 1 to control the influence of individual data points. Finally, for the AdaBoost-enhanced Decision Tree, the number of estimators (n_estimators) was varied between 100, 150, and 200, and the learning rate was optimized at 0.3, 0.5, and 0.7. The depth of the base estimator (estimator__max_depth) was tested between 5 and 9 to improve the model's capacity to capture complex patterns in the data.
+
+### Result & Discussions
+
+After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of around 97%. In contrast, KNN, despite its adjustments, achieved a lower accuracy of 89%. This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, and kernel-based methods like SVM, which use a non-linear approach to classify data, are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic.
+
+
+```{python}
+# import dataset
+
+from ucimlrepo import fetch_ucirepo 
+  
+# fetch dataset 
+estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition = fetch_ucirepo(id=544) 
+  
+# data (as pandas dataframes) 
+features = estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition.data.features
+target = estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition.data.targets 
+
+# create a merged dataframe
+merged_df = pd.concat([features, target], axis = 1)
+```
+
+```{python}
+# View dataframe
+merged_df
+```
+
+```{python}
+# View shape of dataframe 
+print(f"The dataframe has {merged_df.shape[0]} instances and {merged_df.shape[1]} features.")
+```
+
+```{python}
+#| scrolled: true
+# Review summary information of dataframe, dtypes, column names 
+merged_df.info()
+```
+
+# Data Validation
+
+```{python}
+# 1. Check correct data file format
+# The number of instances and features are retrieved from the dataset information in the documentation linked below
+# https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition
+
+# Check if number of instances are the same as documentation 
+assert merged_df.shape[0] == 2111, "merged_df does not have number of instances mentioned in the documentation"
+
+# check if number of features are the same as documentation (17 including the target)
+assert merged_df.shape[1] == 17, "merged_df does not have number of features mentioned in the documentation"
+
+# check if DataFrame is correct type
+assert isinstance(merged_df, pd.DataFrame), "merged_df is not a pandas DataFrame" 
+```
+
+Orginal column names are retrieved from\
+https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition
+
+```{python}
+# Create variable with features listed in the documentation cited in cell above 
+original_column_names = ['Gender', 'Age', 'Height', 'Weight', 'family_history_with_overweight',
+       'FAVC', 'FCVC', 'NCP', 'CAEC', 'SMOKE', 'CH2O', 'SCC', 'FAF', 'TUE',
+       'CALC', 'MTRANS', 'NObeyesdad']
+```
+
+```{python}
+# 2. Check columns names (Data Validation)
+assert sorted(original_column_names) == sorted(merged_df.columns), "merged_df does not have the same column names as original_column_names"
+```
+
+```{python}
+#| scrolled: true
+# Rename columns into meaningful names
+# create dictionary for renaming
+
+rename_dict = {
+    'Gender': 'gender',
+    'Age': 'age',
+    'Height': 'height',
+    'Weight': 'weight',
+    'FAVC': 'frequent_high_calorie_intake',
+    'FCVC': 'vegetable_intake_in_meals',
+    'NCP': 'meals_per_day',
+    'CAEC': 'food_intake_between_meals',
+    'SMOKE': 'smoker',
+    'CH2O': 'daily_water_intake',
+    'SCC': 'monitor_calories',
+    'FAF': 'days_per_week_with_physical_activity',
+    'TUE': 'daily_screen_time',
+    'CALC': 'frequent_alcohol_intake',
+    'MTRANS': 'mode_of_transportation',
+    'NObeyesdad': 'obesity_level'
+}
+
+merged_df = merged_df.rename(columns = rename_dict)
+merged_df.info()
+```
+
+```{python}
+#| scrolled: true
+# Code below adapted from https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html
+
+# 4. Check missingness not beyond expected threshold with "nullable"
+# 5. Check correct data types in each column with "first parameter in pa.Column"
+# 7. Check the outlier or anomalous values with "pa.Check.between"
+# 8. Check category levels with "pa.Check.isin"
+schema = pa.DataFrameSchema({
+    "gender": pa.Column(str, pa.Check.isin(["Female", "Male"])),
+    "age": pa.Column(float, pa.Check.between(10, 99), nullable=True),
+    "height": pa.Column(float, pa.Check.between(1.0, 2.5), nullable=True),
+    "weight": pa.Column(float, pa.Check.between(30, 200), nullable=True),
+    "family_history_with_overweight": pa.Column(str, pa.Check.isin(["yes", "no"])),
+    "frequent_high_calorie_intake": pa.Column(str, pa.Check.isin(["yes", "no"])),
+    "vegetable_intake_in_meals": pa.Column(float, pa.Check.between(1.0, 3.0), nullable=True),
+    "meals_per_day": pa.Column(float, pa.Check.between(0.0, 10.0), nullable=True),
+    "food_intake_between_meals": pa.Column(str, pa.Check.isin(['Sometimes', 'Frequently', 'Always', 'no'])),
+    "smoker": pa.Column(str, pa.Check.isin(['no', 'yes'])),
+    "daily_water_intake": pa.Column(float, pa.Check.between(0.0, 5.0), nullable=True),
+    "monitor_calories": pa.Column(str, pa.Check.isin(["yes", "no"])),
+    "days_per_week_with_physical_activity": pa.Column(float, pa.Check.between(0.0, 7.0), nullable=True),
+    "daily_screen_time": pa.Column(float, pa.Check.between(0.0, 24.0), nullable=True),
+    "frequent_alcohol_intake": pa.Column(str, pa.Check.isin(['no', 'Sometimes', 'Frequently', 'Always'])),
+    "mode_of_transportation": pa.Column(str, pa.Check.isin(['Public_Transportation', 'Walking', 'Automobile', 'Motorbike',
+       'Bike'])),
+    "obesity_level": pa.Column(str, pa.Check.isin(['Normal_Weight', 'Overweight_Level_I', 'Overweight_Level_II',
+       'Obesity_Type_I', 'Insufficient_Weight', 'Obesity_Type_II','Obesity_Type_III'])), 
+    },
+
+    # 6. Check no duplicated observations 
+    # 3. Check the empty observations                     
+    checks=[
+        pa.Check(lambda df: ~df.duplicated().any(), error="Duplicate rows found."),
+        pa.Check(lambda df: ~(df.isna().all(axis=1)).any(), error="Empty rows found.")
+    ],
+    # Drop duplicate row
+    drop_invalid_rows=True
+)
+
+schema.validate(merged_df, lazy=True).drop_duplicates().dropna(how="all")
+```
+
+```{python}
+merged_df = merged_df.drop_duplicates().dropna(how="all")
+merged_df.shape
+```
+
+```{python}
+# 9.Target/response variable follows expected distribution
+# Use Altair for visualization
+import altair as alt
+
+actual_counts = merged_df['obesity_level'].value_counts().reset_index()
+actual_counts.columns = ['obesity_level', 'count']
+expect_counts = merged_df.shape[0] / merged_df['obesity_level'].nunique()
+actual_counts['expected'] = expect_counts
+
+# Add threshold ±60
+actual_counts['expected_lower'] = actual_counts['expected'] - 60
+actual_counts['expected_upper'] = actual_counts['expected'] + 60
+
+actual_dist = alt.Chart(actual_counts).mark_bar(color='steelblue', opacity=0.6).encode(
+    x=alt.X('obesity_level:N', title='Obesity Level'),
+    y=alt.Y('count:Q', title='Count'),
+    tooltip=['obesity_level', 'count']
+)
+
+expected_dist = alt.Chart(actual_counts).mark_bar(color='orange', opacity=0.3).encode(
+    x=alt.X('obesity_level:N', title='Obesity Level'),
+    y=alt.Y('expected:Q'),
+    tooltip=['obesity_level', 'expected']
+)
+
+error_bar = alt.Chart(actual_counts).mark_errorbar(color='black').encode(
+    x=alt.X('obesity_level:N'),
+    y=alt.Y('expected_lower:Q', title='Error Bar'),
+    y2='expected_upper:Q'
+)
+
+ticks = alt.Chart(actual_counts).mark_tick(
+    color='black',
+    thickness=2,
+    size=20  
+).encode(
+    x=alt.X('obesity_level:N'),
+    y=alt.Y('expected_lower:Q')  
+) + alt.Chart(actual_counts).mark_tick(
+    color='black',
+    thickness=2,
+    size=20  
+).encode(
+    x=alt.X('obesity_level:N'),
+    y=alt.Y('expected_upper:Q')  
+)
+
+target_dist = alt.layer(
+    expected_dist, actual_dist, error_bar, ticks
+).properties(
+    title='Target Variable vs Expected Distribution',
+    width=400,
+    height=300
+)
+
+legend_data = pd.DataFrame({
+    'Category': ['Actual', 'Expected'],
+    'Color': ['steelblue', 'orange']
+})
+
+manual_legend = alt.Chart(legend_data).mark_rect().encode(
+    y=alt.Y('Category:N', axis=alt.Axis(title='Legend')),
+    color=alt.Color('Color:N', scale=None)
+).properties(
+    width=20,
+    height=100
+) + alt.Chart(legend_data).mark_text(align='left', dx=25).encode(
+    y=alt.Y('Category:N')
+)
+
+final_dist = alt.hconcat(target_dist, manual_legend).resolve_legend(color="independent")
+
+final_dist
+```
+
+```{python}
+import warnings
+# To hide the warnings about "is_categorical_dtype is deprecated 
+# and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead"
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+# 10. No anomalous correlations between target/response variable and features/explanatory variables
+# Code adapted from deepchecks <Feature Label Correlation>
+# https://docs.deepchecks.com/stable/tabular/auto_checks/data_integrity/plot_feature_label_correlation.html
+ds = Dataset(merged_df, 
+             label='obesity_level', 
+             cat_features=['gender',                     
+                           'family_history_with_overweight',
+                           'frequent_high_calorie_intake',
+                           'food_intake_between_meals',
+                           'smoker',
+                           'monitor_calories',
+                           'frequent_alcohol_intake', 
+                           'mode_of_transportation'])
+
+check_feat_lab_corr = FeatureLabelCorrelation().add_condition_feature_pps_less_than(0.9)
+check_feat_lab_corr_result = check_feat_lab_corr.run(dataset=ds)
+check_feat_lab_corr_result.show()
+
+if not check_feat_lab_corr_result.passed_conditions():
+    raise ValueError("Feature-Label correlation exceeds the maximum acceptable threshold.")
+
+# 11. No anomalous correlations between features/explanatory variables1
+# Code adapted from deepchecks <Feature Feature Correlation>
+# https://docs.deepchecks.com/stable/tabular/auto_checks/data_integrity/plot_feature_feature_correlation.html
+check_feat_feat_corr = FeatureFeatureCorrelation(threshold=0.8)
+check_feat_feat_corr_result = check_feat_feat_corr.run(dataset=ds)
+check_feat_feat_corr_result.show()
+
+if not check_feat_feat_corr_result.passed_conditions():
+    raise ValueError("Feature-Feature correlation exceeds the maximum acceptable threshold.")
+```
+
+## EDA
+
+```{python}
+# Splitting data
+from sklearn.model_selection import train_test_split
+# Separate features and target
+X = merged_df.drop('obesity_level', axis=1)
+y = merged_df['obesity_level']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=522, stratify=y)
+X_train_df = pd.DataFrame(X_train, columns=X.columns)  
+y_train_df = pd.DataFrame(y_train, columns=['obesity_level'])
+train_df = pd.concat([X_train_df, y_train_df], axis=1)
+```
+
+```{python}
+# Plot 1: Target variable distribution 
+target_distribution = alt.Chart(train_df).mark_bar().encode(
+    x=alt.X('obesity_level:N', title='Obesity Level'),
+    y=alt.Y('count():Q', title='Count'),
+    color=alt.Color('obesity_level')
+).properties(
+    title='Figure 1. Distribution of Target: Obesity Level',
+    width=400,
+    height=300
+)
+target_distribution
+```
+
+```{python}
+# Plot 2: Correlation between numeric features
+
+# Keep numeric features
+numeric_data = train_df.select_dtypes(include=['float64', 'int64'])
+
+# Calculate the correlation between features
+correlation_data = numeric_data.corr().reset_index().melt('index')
+
+# Plot heatmap
+correlation_chart = alt.Chart(correlation_data).mark_rect().encode(
+    x=alt.X('variable:N', title='Features'),
+    y=alt.Y('index:N', title='Features'),
+    color=alt.Color(
+        'value:Q',
+        scale=alt.Scale(
+            domain=[0, 1],  
+            range=['#E6F7FF', '#0050B3']  
+        ),
+        title='Correlation'
+    ),
+    tooltip=['index', 'variable', 'value'] 
+).properties(
+    title='Figure 2. Numeric Feature Correlation Heatmap',
+    width=400,
+    height=400
+)
+
+correlation_chart
+```
+
+```{python}
+# Plot 3: Relationship between continuous features and target
+
+alt.data_transformers.enable('vegafusion')
+
+numeric_features_facet = alt.Chart(
+    train_df.melt(id_vars=['obesity_level'], value_vars=numeric_data)
+).mark_boxplot().encode(
+    x=alt.X('obesity_level:N', title='Obesity Level'),
+    y=alt.Y(
+        'value:Q',
+        title='Value',
+        scale=alt.Scale(padding=5)  
+    ),
+    color=alt.Color('obesity_level'),
+    facet=alt.Facet('variable:N', title='Features', columns=2)  
+).properties(
+    title='Figure 3. Distribution of Numeric Features by Obesity Level',
+    width=200,
+    height=200
+).resolve_scale(
+    y='independent'  
+)
+
+numeric_features_facet
+```
+
+```{python}
+# Plot 4: Relationship between calegorical features and target
+
+# Select binary/categorical features (excluding numeric features)
+categorical_features = train_df.select_dtypes(exclude=['float64', 'int64']).columns.difference(['obesity_level'])
+
+# Create a list to store individual charts
+charts = []
+
+# Loop through each categorical feature
+for feature in categorical_features:
+    # Create a bar chart for the current feature
+    chart = alt.Chart(merged_df).mark_bar().encode(
+        x=alt.X(f"{feature}:N", title=feature, sort='-y'),  # Sort categories by count (descending)
+        y=alt.Y('count():Q', title='Count'),
+        color=alt.Color('obesity_level:N', title='Obesity Level'),
+        order=alt.Order('count():Q', sort='descending')  # Sort stack order by count, ascending
+    ).properties(
+        title=f'{feature} by Obesity Level',
+        width=200,
+        height=200
+    )
+    charts.append(chart)
+
+# Arrange charts in rows of 2 columns
+rows = [alt.hconcat(*charts[i:i+2]) for i in range(0, len(charts), 2)]
+
+# Combine all rows into a vertical concatenation
+combined_chart = alt.vconcat(*rows).properties(
+    title="Figure 4. Relationship between Categorical Features and Target"
+).configure_title(
+    fontSize=16,
+    anchor='middle',  
+    font='Arial'
+)
+
+# Display the combined chart
+combined_chart
+```
+
+## Classification Analysis
+
+```{python}
+from sklearn.model_selection import cross_val_score, cross_validate
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import classification_report
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score
+
+# Identify categorical and numerical columns
+categorical_cols = X.select_dtypes(include=['object']).columns
+numerical_cols = X.select_dtypes(include=['float64']).columns
+```
+
+```{python}
+# Encode target variable
+label_encoder = LabelEncoder()
+y_train = label_encoder.fit_transform(y_train)
+y_test = label_encoder.fit_transform(y_test)
+
+# Preprocessing for numeric and categorical data
+numeric_transformer = StandardScaler()
+categorical_transformer = OneHotEncoder(handle_unknown='ignore')
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numeric_transformer, numerical_cols),
+        ('cat', categorical_transformer, categorical_cols)
+    ]
+)
+```
+
+```{python}
+# Models to evaluate
+models = {
+    'KNN': KNeighborsClassifier(),
+    'SVM (RBF Kernel)': SVC(kernel='rbf', random_state=522),
+    'AdaBoost + Decision Tree': AdaBoostClassifier(
+        estimator=DecisionTreeClassifier(max_depth=5, random_state=522), 
+        n_estimators=50,  
+        learning_rate=0.5,
+        algorithm="SAMME",
+        random_state=522
+    )
+}
+```
+
+```{python}
+# Code adapted from DSCI 571 Lecture 4
+# https://pages.github.ubc.ca/MDS-2024-25/DSCI_571_sup-learn-1_students/lectures/notes/04_preprocessing-pipelines-column-transformer.html
+
+def mean_std_cross_val_scores(model, X_train, y_train, **kwargs):
+    """
+    Returns mean and std of cross validation
+
+    Parameters
+    ----------
+    model :
+        scikit-learn model
+    X_train : numpy array or pandas DataFrame
+        X in the training data
+    y_train :
+        y in the training data
+
+    Returns
+    ----------
+        pandas Series with mean scores from cross_validation
+    """
+    scores = cross_validate(model, X_train, y_train, return_train_score=True, **kwargs)
+
+    mean_scores = pd.DataFrame(scores).mean()
+    std_scores = pd.DataFrame(scores).std()
+    out_col = []
+
+    for i in range(len(mean_scores)):
+        out_col.append((f"%0.3f (+/- %0.3f)" % (mean_scores.iloc[i], std_scores.iloc[i])))
+
+    return pd.Series(data=out_col, index=mean_scores.index)
+```
+
+```{python}
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn.preprocessing")
+
+# Evaluate models with detailed cross-validation results
+results = {}
+
+for name, model in models.items():
+    pipeline = Pipeline(steps=[('preprocessor', preprocessor), ('classifier', model)])
+    
+    results[name] = mean_std_cross_val_scores(
+        pipeline, X_train, y_train, cv=5, scoring='accuracy'
+    )
+
+# Combine results into a DataFrame for comparison
+results_df = pd.DataFrame(results)
+
+# Display the results
+print("Cross-Validation Results for Models:")
+results_df
+```
+
+```{python}
+#| scrolled: true
+# Hyper Parameter Optimization
+param_grids = {
+    'KNN': {
+        'n_neighbors': [3, 5, 7, 9],  
+        'weights': ['uniform', 'distance'],  
+        'metric': ['euclidean', 'manhattan']  
+    },
+    'SVM (RBF Kernel)': {
+        'C': [0.1, 1, 10, 100],  
+        'gamma': ['scale', 'auto', 0.01, 0.1, 1] 
+    },
+    'AdaBoost + Decision Tree': {
+        'n_estimators': [100, 150, 200],  
+        'learning_rate': [0.3, 0.5, 0.7],  
+        'estimator__max_depth': [5, 6, 7, 8, 9]  
+    }
+}
+
+# To store best params and scores
+best_params = {}
+best_scores = {}
+
+# Hyper paramaters optimization for each model
+for name, model in models.items():
+    pipeline = Pipeline(steps=[('preprocessor', preprocessor), ('classifier', model)])
+    param_grid = {f'classifier__{key}': value for key, value in param_grids[name].items()}
+    
+    grid_search = GridSearchCV(
+        pipeline,
+        param_grid=param_grid,
+        cv=5,
+        scoring='accuracy',
+        n_jobs=-1
+    )
+    grid_search.fit(X_train, y_train)
+    
+    best_params[name] = grid_search.best_params_
+    best_scores[name] = grid_search.best_score_
+
+# Print result
+results_df = pd.DataFrame({
+    'Best Params': best_params,
+    'Best CV Accuracy': best_scores
+})
+print(results_df)
+```
+
+```{python}
+manual_best_params = {
+    'KNN': {
+        'n_neighbors': 3,
+        'weights': 'distance',
+        'metric': 'manhattan'
+    },
+    'SVM (RBF Kernel)': {
+        'C': 100,
+        'gamma': 0.01
+    },
+    'AdaBoost + Decision Tree': {
+        'n_estimators': 150,
+        'learning_rate': 0.7,
+        'estimator__max_depth': 8
+    }
+}
+
+test_results = {}
+
+for name, model in models.items():
+
+    params = manual_best_params[name]
+    model.set_params(**params)
+    
+    pipeline = Pipeline(steps=[('preprocessor', preprocessor), ('classifier', model)])
+    
+    pipeline.fit(X_train, y_train)
+    
+    y_pred = pipeline.predict(X_test)
+    
+    # Estimate performance
+    accuracy = accuracy_score(y_test, y_pred)
+    report = classification_report(y_test, y_pred, output_dict=True)
+    
+    test_results[name] = {
+        "Accuracy": accuracy
+    }
+
+# Print result
+for name, result in test_results.items():
+    print(f"Performance for {name} on Test Set:")
+    print(f"Accuracy: {result['Accuracy']}")
+```
+
+```{python}
+# Result Visualization of model comparison
+results_data = pd.DataFrame({
+    'Model': list(test_results.keys()),
+    'Accuracy': [result['Accuracy'] for result in test_results.values()]
+})
+
+# A bar chart for comparison
+final_chart = alt.Chart(results_data).mark_bar().encode(
+    x=alt.X('Model:N', title='Model', sort=None, axis=alt.Axis(labelAngle=0)),
+    y=alt.Y('Accuracy:Q', title='Accuracy', scale=alt.Scale(domain=[0, 1])),
+    tooltip=['Model', 'Accuracy']
+).properties(
+    title='Figure 5. Model Performance Comparison',
+    width=600,
+    height=400
+).configure_mark(
+    color='skyblue'
+).configure_axis(
+    labelFontSize=12,
+    titleFontSize=14
+).configure_title(
+    fontSize=16
+)
+
+final_chart
+```
+
+# References
+
+Estimation of Obesity Levels Based On Eating Habits and Physical Condition. (2019). UCI Machine Learning Repository. Retrieved from https://doi.org/10.24432/C5H31Z
+
+Han, T. S., Sattar, N., & Lean, M. (2006). Assessment of obesity and its clinical implications. BMJ, 333(7570), 695–698. Retrieved from https://doi.org/10.1136/bmj.333.7570.695
+
+Palechor, F. M., & De La Hoz Manotas, A. (2019). Dataset for estimation of obesity levels based on eating habits and physical condition in individuals from Colombia, Peru and Mexico. Retrieved from Data in Brief, 25, 104344. https://doi.org/10.1016/j.dib.2019.104344
+
+Westbury, S., Oyebode, O., Van Rens, T., & Barber, T. M. (2023). Obesity stigma: causes, consequences, and potential solutions. Current Obesity Reports, 12(1), 10–23. Retrieved from https://doi.org/10.1007/s13679-023-00495-3
+
+World Health Organization. (2023). Obesity and overweight. Retrieved from https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight
+
+Zhou, X., Chen, L., & Liu, H. (2022). Applications of machine learning models to predict and prevent obesity: A mini-review. Frontiers in Nutrition, 9. Retrieved from https://doi.org/10.3389/fnut.2022.933130
+
+Feature label correlation — DeepChecks documentation. (n.d.). Retrieved from https://docs.deepchecks.com/stable/tabular/auto_checks/data_integrity/plot_feature_label_correlation.html
+
+Tiffany A. Timbers, Joel Ostblom, Florencia D’Andrea, Rodolfo Lourenzutti, Daniel Chen (2024). Reproducible and Trustworthy Workflows for Data Science. Retrieved from https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/
+
+Lecture 4: Preprocessing, sklearn Pipeline, sklearn ColumnTrasnsformer — DSCI 571 Supervised Learning I. UBC Master of Data Science program (2023). Retrieved from https://pages.github.ubc.ca/mds-2024-25/DSCI_571_sup-learn-1_students/lectures/notes/04_preprocessing-pipelines-column-transformer.html
+
