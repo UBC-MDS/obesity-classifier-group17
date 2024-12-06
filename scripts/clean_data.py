@@ -19,9 +19,14 @@ from src.validate_data import validate_data
 @click.option('--data-to', type=str, help="Path to directory where processed data will be written to")
 @click.option('--seed', type=int, help="Random seed", default=123)
 def main(raw_data, name, data_to, seed):
-    '''This script splits the raw data into train and test sets, 
-    and then preprocesses the data to be used in exploratory data analysis.
-    It also saves the preprocessor to be used in the model training script.'''
+
+    '''This script checks the number of rows and columns of the data frame against the documentation.
+    It checks whether type is Panda data frame and that the column names match the documentation.
+    Additionally the column names are changes to a more interpretable name.
+    Finally it validates the data based on the function from validate_data.py file
+    and drop duplicates/invalid rows.
+    The cleaned data is saved in a directory path.
+    '''
     np.random.seed(seed)
     set_config(transform_output="pandas")
     
@@ -48,6 +53,7 @@ def main(raw_data, name, data_to, seed):
     # 2. Check columns names (Data Validation)
     assert sorted(original_column_names) == sorted(merged_df.columns), "merged_df does not have the same column names as original_column_names"
 
+    # Rename columns into meaningful names
     rename_dict = {
         'Gender': 'gender',
         'Age': 'age',
@@ -69,6 +75,7 @@ def main(raw_data, name, data_to, seed):
 
     merged_df = merged_df.rename(columns = rename_dict)
     
+    # validate_data() is imported from validate_data.py in src folder
     validate_data(merged_df)
 
     merged_df_cleaned = merged_df.drop_duplicates().dropna(how="all")
