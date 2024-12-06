@@ -9,27 +9,45 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-import pickle
-from sklearn.model_selection import train_test_split
 from sklearn import set_config
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import make_column_transformer, make_column_selector
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.validate_data import validate_data
 
 @click.command()
 @click.option('--raw-data', type=str, help="Path to raw data")
+@click.option('--name', type=str, help="name of processed the file")
 @click.option('--data-to', type=str, help="Path to directory where processed data will be written to")
 @click.option('--seed', type=int, help="Random seed", default=123)
-def main(raw_data, data_to, seed):
+def main(raw_data, name, data_to, seed):
     '''This script splits the raw data into train and test sets, 
     and then preprocesses the data to be used in exploratory data analysis.
     It also saves the preprocessor to be used in the model training script.'''
     np.random.seed(seed)
     set_config(transform_output="pandas")
     
-    obesity_df = pd.read_csv(raw_data)
+    merged_df = pd.read_csv(raw_data, index_col=0)
+
+    # 1. Check correct data file format
+    # The number of instances and features are retrieved from the dataset information in the documentation linked below
+    # https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition
+
+    # Check if number of instances are the same as documentation 
+    assert merged_df.shape[0] == 2111, "merged_df does not have number of instances mentioned in the documentation"
+
+    # check if number of features are the same as documentation (17 including the target)
+    assert merged_df.shape[1] == 17, "merged_df does not have number of features mentioned in the documentation"
+
+    # check if DataFrame is correct type
+    assert isinstance(merged_df, pd.DataFrame), "merged_df is not a pandas DataFrame" 
+
+    # Create variable with features listed in the documentation cited in cell above 
+    original_column_names = ['Gender', 'Age', 'Height', 'Weight', 'family_history_with_overweight',
+        'FAVC', 'FCVC', 'NCP', 'CAEC', 'SMOKE', 'CH2O', 'SCC', 'FAF', 'TUE',
+        'CALC', 'MTRANS', 'NObeyesdad']
+    
+    # 2. Check columns names (Data Validation)
+    assert sorted(original_column_names) == sorted(merged_df.columns), "merged_df does not have the same column names as original_column_names"
+
     rename_dict = {
         'Gender': 'gender',
         'Age': 'age',
@@ -49,12 +67,15 @@ def main(raw_data, data_to, seed):
         'NObeyesdad': 'obesity_level'
     }
 
-    obesity_df = obesity_df.rename(columns = rename_dict)
+    merged_df = merged_df.rename(columns = rename_dict)
     
-    validate_data(obesity_df)
+    validate_data(merged_df)
 
-    obesity_df_cleaned = obesity_df.drop_duplicates().dropna(how="all")
-    obesity_df_cleaned.to_csv(data_to)
+    merged_df_cleaned = merged_df.drop_duplicates().dropna(how="all")
+
+     # Check if the directory exists, else create one.
+    os.makedirs(data_to, exist_ok=True)
+    merged_df_cleaned.to_csv(f'{data_to}/{name}')
 
 if __name__ == '__main__':
     main()

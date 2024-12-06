@@ -4,6 +4,7 @@
 # author: Zanan Pech
 # date: 2024-12-04
 
+from ucimlrepo import fetch_ucirepo 
 import click
 import os
 import pandas as pd
@@ -11,16 +12,21 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 @click.command()
-@click.option('--url', type=str, help="URL of dataset to be downloaded")
+@click.option('--id', type=int, help="id of the dataset", default=544)
+@click.option('--name', type=str, help="name of the raw file")
 @click.option('--write_to', type=str, help="Path to directory where raw data will be written to")
-def main(url, write_to):
+def main(id, name, write_to):
     """Downloads data from the web to a local filepath."""
-    try:
-        data = pd.read_csv(url)
-        data.to_csv(write_to)
-    except:
-        os.makedirs(write_to)
-        data.to_csv(write_to)
+
+    result = fetch_ucirepo(id=id)
+    features = result.data.features
+    target = result.data.targets
+    merged_df = pd.concat([features, target], axis=1)    
+
+    # Check if the directory exists, else create one.
+    os.makedirs(write_to, exist_ok=True)
+    merged_df.to_csv(f'{write_to}/{name}')
+
 
 if __name__ == '__main__':
     main()
