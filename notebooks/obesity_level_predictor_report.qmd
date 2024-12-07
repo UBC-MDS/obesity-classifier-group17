@@ -10,7 +10,7 @@ format:
     pdf: 
         toc: true
         toc-depth: 2
-#bibliography: references.bib
+bibliography: references.bib
 execute: 
   echo: false
   warning: false
@@ -40,15 +40,15 @@ In this study, we aim to develop a classification model to determine whether an 
 
 # Introduction
 
-Obesity, a complex and seemingly insurmountable public health and medical challenge, has become a global issue with severe negative impacts on both health and the economy (World Health Organization, 2023). This condition is associated with various medical and psychological complications, significantly affecting individuals' health and social well-being. The World Health Organization (WHO) defines obesity as an excessive accumulation of body fat that poses a risk to health (World Health Organization, 2023). To implement this definition in practice, body mass index (BMI)—a widely used indicator of body fat—is employed to classify obesity. Specifically, under WHO guidelines, individuals with a BMI exceeding 30 are categorized as obese (World Health Organization, 2023). Those living with obesity often face persistent stigma and discrimination, which further heightens their risk of disease and mortality (Westbury et al., 2023).
+Obesity, a complex and seemingly insurmountable public health and medical challenge, has become a global issue with severe negative impacts on both health and the economy [@world2024primary]. This condition is associated with various medical and psychological complications, significantly affecting individuals' health and social well-being. The World Health Organization (WHO) defines obesity as an excessive accumulation of body fat that poses a risk to health [@world2024primary]. To implement this definition in practice, body mass index (BMI)—a widely used indicator of body fat—is employed to classify obesity. Specifically, under WHO guidelines, individuals with a BMI exceeding 30 are categorized as obese [@world2024primary]. Those living with obesity often face persistent stigma and discrimination, which further heightens their risk of disease and mortality [@westbury2023obesity].
 
-Traditional methods for identifying and managing obesity often rely on clinical measurements like body mass index (BMI), which, while effective, can be time-consuming and resource-intensive (Han et al., 2006). Machine learning (ML), a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets (Frontiers in Endocrinology, 2022). By leveraging predictive models, ML can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity (Zhou et al., 2022).
+Traditional methods for identifying and managing obesity often rely on clinical measurements like body mass index (BMI), which, while effective, can be time-consuming and resource-intensive [@han2006assessment]. Machine learning (ML), a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets [@zhou2022applications]. By leveraging predictive models, ML can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity [@zhou2022applications].
 
 # Methods
 
 ### Data
 
-The dataset used is obtained from UC Irvine Machine Learning Repository ([link here](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)). This dataset was used in work by Fabio Mendoza Palechor and  Alexis de la Hoz Manotas (Palechor, F. M., & De La Hoz Manotas, A., 2019). Find work [here](https://doi.org/10.1016/j.dib.2019.104344). The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia (Estimation of Obesity Levels Based On Eating Habits and Physical Condition, 2019). The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. This dataset contains 24 duplicate rows which were dropped after data validation process.
+The dataset used is obtained from UC Irvine Machine Learning Repository ([link here](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)). This dataset was used in work by Fabio Mendoza Palechor and  Alexis de la Hoz Manotas [@palechor2019dataset]. Find work [here](https://doi.org/10.1016/j.dib.2019.104344). The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544]. The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. This dataset contains 24 duplicate rows which were dropped after data validation process.
 
 
 ### Analysis
