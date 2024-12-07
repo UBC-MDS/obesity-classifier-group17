@@ -73,7 +73,7 @@ div.csl-indent {
   <li><a href="#result-discussions" id="toc-result-discussions" class="nav-link" data-scroll-target="#result-discussions">Result &amp; Discussions</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../obesity_level_predictor_report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="..\obesity_level_predictor_report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -142,6 +142,45 @@ Figure&nbsp;1: Target Variable Expected Distribution
 </section>
 <section id="result-discussions" class="level1">
 <h1>Result &amp; Discussions</h1>
+<div class="cell" data-execution_count="2">
+<div id="tbl-test_result" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-test_result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Test result of model performance on test data
+</figcaption>
+<div aria-describedby="tbl-test_result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="5">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;"></th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">AdaBoost + Decision Tree</td>
+<td style="text-align: right;">0.968454</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">KNN</td>
+<td style="text-align: right;">0.875394</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">SVM (RBF Kernel)</td>
+<td style="text-align: right;">0.9653</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 <p>After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of around (INSERT CODE)97%. In contrast, KNN, despite its adjustments, achieved a lower accuracy of (INSERT CODE)89%. This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, and kernel-based methods like SVM, which use a non-linear approach to classify data, are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic.</p>
 </section>
 <section id="references" class="level1 unnumbered">

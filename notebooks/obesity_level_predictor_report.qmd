@@ -18,6 +18,15 @@ editor: source
 
 ---
 
+```{python}
+import pandas as pd
+import pickle
+from tabulate import tabulate
+from IPython.display import Markdown, display
+
+test_result = pd.read_csv("../results/tables/test_results.csv")
+```
+
 
 # Summary
 
@@ -73,6 +82,15 @@ Finally, for the AdaBoost-enhanced Decision Tree, the number of estimators (n_es
 The depth of the base estimator (estimator__max_depth) was tested between 5 and 9 to improve the model's capacity to capture complex patterns in the data.
 
 # Result & Discussions
+
+```{python}
+
+#| label: tbl-test_result
+#| tbl-cap: Test result of model performance on test data
+
+Markdown(test_result.to_markdown())
+
+```
 
 After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of around (INSERT CODE)97%. 
 In contrast, KNN, despite its adjustments, achieved a lower accuracy of (INSERT CODE)89%. 
