@@ -1,4 +1,4 @@
-# Code below is adapted from work by Tiffany A. Timbers in breast-cancer-predictor repository
+# Code template below is adapted from work by Tiffany A. Timbers in breast-cancer-predictor repository
 # https://github.com/ttimbers/breast-cancer-predictor/blob/main/scripts/split_n_preprocess.py
 # download_data.py
 # author: Zanan Pech, Yun Zhou
