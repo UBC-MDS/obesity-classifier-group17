@@ -1,5 +1,5 @@
-# Code below is adapted from work by Tiffany A. Timbers in breast-cancer-predictor repository
-# https://github.com/ttimbers/breast-cancer-predictor/blob/main/scripts/download_data.py
+# Code below is adapted from work by uci machine learning repository
+# https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition
 # download_data.py
 # author: Zanan Pech
 # date: 2024-12-04
