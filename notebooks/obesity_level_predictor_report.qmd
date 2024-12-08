@@ -1,0 +1,133 @@
+---
+title: Predicting Obesity Level Based on Eating Habits and Physical Condition
+author: Yun Zhou, Zanan Pech, Sepehr Heydarian
+date: "2024/12/06"
+jupyter: python3
+format:
+    html:
+        toc: true
+        toc-depth: 2
+    pdf: 
+        toc: true
+        toc-depth: 2
+bibliography: references.bib
+execute: 
+  echo: false
+  warning: false
+editor: source
+
+---
+
+```{python}
+import pandas as pd
+import pickle
+from tabulate import tabulate
+from IPython.display import Markdown, display
+
+test_result = pd.read_csv("../results/tables/test_results.csv")
+df = pd.read_csv("../data/processed/ObesityDataSet_processed_data.csv")
+```
+
+
+# Summary
+
+In this study, we aim to develop a classification model to determine whether an individual is obese and, if so, categorize the level of obesity. 
+This analysis seeks to use supervised machine learning to predict obesity levels in individuals based on features related to lifestyle habits and physical condition.
+Three machine learning models — K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost — were trained and evaluated for their performance. 
+The results indicate that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy (`{python} round(test_result.loc[2, 'Accuracy'], 4)` and `{python} round(test_result.loc[0, 'Accuracy'], 4)` respectively) making them the most effective models for this classification task. 
+In contrast, KNN exhibited comparatively lower performance, achieving an accuracy of `{python} round(test_result.loc[1, 'Accuracy'], 4)`, demonstrating its inferiority relative to the other two models in this context. 
+However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. 
+Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application. 
+Despite these limitation, our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals.  
+
+# Introduction
+
+Obesity, a complex and seemingly insurmountable public health and medical challenge, has become a global issue with severe negative impacts on both health and the economy [@world2024primary]. 
+This condition is associated with various medical and psychological complications, significantly affecting individuals' health and social well-being. 
+The World Health Organization (WHO) defines obesity as an excessive accumulation of body fat that poses a risk to health [@world2024primary]. 
+To implement this definition in practice, body mass index (BMI) — a widely used indicator of body fat — is used as a diagnostic measure to classify obesity [@world2024primary]. 
+Those living with obesity often face persistent stigma and discrimination, which further heightens their risk of disease and mortality [@westbury2023obesity].
+
+The dataset we used for our analysis contains 2111 observations from individuals from Mexico, Peru and Colombia, with 16 features related to lifestyle habits, diet, physical activity along with obesity level as the target variable [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544; @palechor2019dataset]. 
+The benefit of using this dataset lies in its abundant features which takes many lifestyle factors into account that can be used for classification models.
+Traditional methods for identifying and managing obesity often rely on clinical measurements like BMI, which, while effective, can be time-consuming and resource-intensive [@han2006assessment]. Additionally, while BMI is a common diagnostic tool, it has inconsistencies as many factors affect it [@callahan2023science].
+This highlights the need for additional tools and approaches for obesity diagnosis.
+Machine learning, a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets [@zhou2022applications]. This brings forth the focus of our research as to why use machine learning as a diagnostic tool for obesity?
+By leveraging predictive models, machine learning can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; 
+this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity [@zhou2022applications].
+
+# Methods
+
+### Data
+
+The dataset used is obtained from UC Irvine Machine Learning Repository ([link here](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)). 
+This dataset was used in work by Fabio Mendoza Palechor and  Alexis de la Hoz Manotas [@palechor2019dataset]. 
+This work can be found [here](https://doi.org/10.1016/j.dib.2019.104344). 
+The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544]. This dataset was chosen because it includes wide range of features including lifestyle habits, physical activity and other metrics including age, weight and sex. 
+The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. 
+Additionally, 77% of this dataset was synthetically generated with SMOTE filter to balance the target classes [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544; @palechor2019dataset] which is one of the limitation as it could introduce bias.
+
+
+As part of data validation process, we followed the guidelines outlined in the [data validation chapter](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html) of work by @chen.
+We checked for missing values, duplicated rows, outliers, and ensured data types for each feature are correct. We verified that the categorical features contain valid categories. 
+We identified 24 duplicated rows which were dropped subsequently. 
+We reviewed the distribution of the target variable and found that all classes are within threshold of 20% of the average observations, shown in (@fig-target_variable_distribution). This is in line with the fact that the original dataset was balanced by synthetic generation and SMOTE filter [@palechor2019dataset].
+These confirm balance in the target classes, ensuring our data is suited for classification modeling.
+
+![Target Variable Expected Distribution](../results/figures/Data_vali_targ_varib_dist.png){#fig-target_variable_distribution width=70%}
+
+
+### Analysis
+
+In this study, we trained three machine learning models — Decision Tree enhanced with AdaBoost, Support Vector Machine (SVM) with an RBF kernel, and K-Nearest Neighbors (KNN) — to predict obesity outcomes. 
+The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. 
+Each model underwent hyperparameter tuning to optimize its predictive capabilities, utilizing a grid search approach to explore various combinations of the hyperparameters. Importantly, our analysis does not focus on predicting a single category of obesity, but considers multiple level for a more comprehensive approach. Additionally, our dataset is balanced and, therefore, our metrics for hyperparameter tuning is accuracy.
+
+In our analysis, we adapted AdaBoost to mitigate potential overfitting issues in a decision tree model[@freund1995desicion]. 
+As a comparison we implemented SVM with an RBF kernel and KNN to establish a baseline for our model accuracy.
+
+For KNN, key hyperparameters such as the number of neighbors (`n_neighbors`), which were varied from 3 to 9, the weight function (uniform or distance), and the distance metric (euclidean or manhattan) were tested. 
+These adjustments aimed to optimize how KNN classifies data points based on their proximity to others. 
+The SVM model utilized a range of values for the regularization parameter (`C`), with values of 0.1, 1, 10, and 100 to balance classification error and margin maximization. 
+Additionally, the kernel coefficient (`gamma`) was adjusted using the options 'scale', 'auto', and specific numeric values such as 0.01, 0.1, and 1 to control the influence of individual data points. 
+Finally, for the AdaBoost-enhanced Decision Tree, the number of estimators (`n_estimators`) was varied between 100, 150, and 200, and the learning rate was optimized at 0.3, 0.5, and 0.7. 
+The depth of the base estimator (`estimator__max_depth`) was tested between 5 and 9 to improve the model's capacity to capture complex patterns in the data.
+
+
+# Result & Discussions
+
+After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, 
+achieving an accuracy of `{python} round(test_result.loc[2, 'Accuracy'], 4)` for SVM and `{python} round(test_result.loc[0, 'Accuracy'], 4)` for AdaBoost-enhanced Decision Tree. These results from test scores are shown in @tbl-test_result.
+In contrast, KNN, despite its adjustments, achieved a lower accuracy of `{python} round(test_result.loc[1, 'Accuracy'], 4)`.
+This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, 
+and kernel-based methods like SVM, which use a non-linear approach to classify data, 
+are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic. 
+In relation to our research question, effective models have highest accuracy for predicting obesity levels as in healthcare misdiagnosis has severed consequences. 
+KNN performed relatively poor compared our other models as its not well suited for high-dimensional data.
+
+
+```{python}
+
+#| label: tbl-test_result
+#| tbl-cap: Test result of model performance on test set
+
+Markdown(test_result.to_markdown())
+
+```
+
+
+Given our high scores in AdaBoost and SVM models, 
+using machine learning shows promising potential in enhancing obesity diagnosis. Unlike traditional methods, such as BMI, 
+which may not always lead to the most accurate diagnosis, the use of tools that consider multiple features can be of great use for healthcare professionals. These machine learning models offer a more comprehensive approach as they can identify underlying patterns from various features that traditional diagnosis methods can miss. 
+
+Although these results yield high test scores which indicate that the model generalizes well, limitations in our dataset should be acknowledged. The dataset we used for our analysis had majority of it data synthetically generated. 
+While this technique could address class imbalance, it could lead to potential biases as there may be patterns that do not exist in the actual population. 
+This may result in a less effective performance when applied to real-world unseen data.
+Another limitation is related to the lack of representation in the dataset as it collected information from three countries only - Mexico, Peru and Colombia.
+Certain patterns could exist in lifestyle and diet within each of these countries, and considering that all these countries are located in the Americas, the data is not representative of a diverse global population. 
+This geographical limitation may hinder our model's applicability as a worldwide healthcare tool. 
+
+Future work should focus on validating these models using larger datasets from variety of regions and populations that include features related to lifestyle habits, diet and physical condition.
+These efforts would ensure broader applicability of machine learning tools in healthcare, specifically in diagnosing levels of obesity.
+
+# References

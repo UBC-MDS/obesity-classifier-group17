@@ -6,9 +6,9 @@ Milestone 2 for DSCI 522 data workflows project
 
 ## About
 
-In this project we attempt to build a model to classify different levels of obesity. The obesity levels are categorized as Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. We trained and evaluated three machine learning models - K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost. Our evaluation showed that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy of ~97%. Although the accuracy of our KNN model is ~88%. These high scores reflect on the quality of data and analysis. With these promising scores, this model could potentially act as a useful tool in the healthcare industry to better help patients and healthcare professionals. 
+In this project we attempt to build a model to classify different levels of obesity. The obesity levels are categorized as Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. We trained and evaluated three machine learning models - K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost. Our evaluation showed that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy of ~97%. Although the accuracy of our KNN model is ~88%. These high scores reflect on the quality of data and analysis. With these promising scores, this model could potentially act as a useful tool in the healthcare industry to better help patients and healthcare professionals.
 
-The dataset used is obtained from UC Irvine Machine Learning Repository - [Link here](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition). This dataset was used in work by Fabio Mendoza Palechor and  Alexis de la Hoz Manotas (Palechor, F. M., & De La Hoz Manotas, A., 2019). Find work [here](https://doi.org/10.1016/j.dib.2019.104344). The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia (Estimation of Obesity Levels Based On Eating Habits and Physical Condition, 2019). This dataset contains 24 duplicate rows which were dropped after data validation process. 
+The dataset used is obtained from UC Irvine Machine Learning Repository - [Link here](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition). This dataset was used in work by Fabio Mendoza Palechor and Alexis de la Hoz Manotas (Palechor, F. M., & De La Hoz Manotas, A., 2019). Find work [here](https://doi.org/10.1016/j.dib.2019.104344). The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia (Estimation of Obesity Levels Based On Eating Habits and Physical Condition, 2019). This dataset contains 24 duplicate rows which were dropped after data validation process.
 
 ## Report
 
@@ -24,27 +24,76 @@ Clone the main branch of this repository: [Repository link](https://github.com/U
 git clone https://github.com/UBC-MDS/obesity-classifier-group17
 ```
 
-Once in the root directory of repository in local run the following command in terminal to open container. 
+Once in the root directory of repository in local run the following command in terminal to open container.
 
 ```bash
 docker compose up
 ```
+
 From the output of the above command in the terminal find the link to the container. See [image](https://github.com/UBC-MDS/obesity-classifier-group17/blob/main/img/container-weblaunch-url.png) as reference to find the url.
 
 Open URL and once in Jupyter Lab under the "Kernel" menu click "Restart Kernel and Run All Cells...".
 
 For further work on the environment and updating dependencies use `environment.yml` file (found [here](https://github.com/UBC-MDS/obesity-classifier-group17/blob/main/environment.yml).) Once file is updated with new dependencies run:
+
 ```bash
 conda-lock -k explicit --file environment.yml -p linux-64
 ```
+
 Push changes to main and on Github Actions > Publish Docker Image and run the workflow. Find docker tag in new published image and update the `docker-compose.yml`.
+
+## Running the analysis using scripts
+
+1. Open Terminal and set directory to the root of the repository
+
+2. Download dataset
+
+```
+python scripts/download_data.py --write_to="data/raw" --name="ObesityDataSet_raw_data_sinthetic.csv"
+```
+
+3. Clean data and do validation
+
+```
+python scripts/clean_data.py --raw-data='data/raw/ObesityDataSet_raw_data_sinthetic.csv' --name='ObesityDataSet_processed_data.csv' --data-to="data/processed/" --plot-to="results/figures" --html-to="results/htmls"
+```
+
+4. Split and preprocess data
+
+```
+python scripts/split_n_preprocess.py --clean-data=data/processed/ObesityDataSet_processed_data.csv --data-to=data/processed --preprocessor-to=results/models --seed=522
+```
+5. Explanatory Data Analysis
+
+```
+python scripts/eda.py --training_data_split=data/processed/obesity_train.csv --plot_path=results/figures/
+```
+
+6. Fit the models
+
+```
+python scripts/fit_obesity_classifier.py --encoded-train-data=data/processed/obesity_train_target_encoding.csv --data-to=results/tables --preprocessor=results/models/obesity_preprocessor.pickle --seed=522 --pipeline-to=results/models
+```
+
+7. Evaluate the models
+
+```
+python scripts/evaluate_models.py --test-data=data/processed/obesity_test_target_encoding.csv --pipeline-path=results/models/trained_pipelines.pkl --data-to=results/tables --plot-to=results/figures
+```
+
+8. Render report files
+
+```
+quarto render notebooks/obesity_level_predictor_report.qmd --to html
+quarto render notebooks/obesity_level_predictor_report.qmd --to pdf
+```
 
 ## Dependencies
 
 [Docker](https://www.docker.com/)
 
-
 ## License
+
 The Obesity Level Predictor project report is licensed under [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). For additional information visit license link. Follow guidelines highlighted in the license file when using and sharing this work.
 
 ## References
