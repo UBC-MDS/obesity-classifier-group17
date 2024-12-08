@@ -18,6 +18,7 @@ from deepchecks.tabular.checks import FeatureLabelCorrelation
 from deepchecks.tabular.checks.data_integrity import FeatureFeatureCorrelation
 
 warnings.filterwarnings("ignore")
+
 @click.command()
 @click.option('--raw-data', type=str, help="Path to raw data")
 @click.option('--name', type=str, help="name of processed the file")
