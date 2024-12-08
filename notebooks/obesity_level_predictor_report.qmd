@@ -82,6 +82,9 @@ In this study, we trained three machine learning models—Decision Tree enhanced
 The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. 
 Each model underwent hyperparameter tuning to optimize its predictive capabilities, utilizing a grid search approach to explore various combinations of hyperparameters. Importantly, our analysis does not focus on predicting a single category of obesity, but considers multiple level for a more comprehensive approach. Additionally, our dataset is balanced. As a result our metrics for hyperparameter tuning is accuracy.
 
+In our analysis, we adapted AdaBoost to mitigate potential overfitting issues in a decision tree model[@freund1995desicion]. 
+As a comparison we implemented SVM with an RBF kernel and KNN to establish a baseline for our model accuracy.
+
 For KNN, key hyperparameters such as the number of neighbors (`n_neighbors`), which were varied from 3 to 9, the weight function (uniform or distance), and the distance metric (euclidean or manhattan) were tested. 
 These adjustments aimed to optimize how KNN classifies data points based on their proximity to others. 
 The SVM model utilized a range of values for the regularization parameter (`C`), with values of 0.1, 1, 10, and 100 to balance classification error and margin maximization. 
@@ -89,21 +92,29 @@ Additionally, the kernel coefficient (`gamma`) was adjusted using options like '
 Finally, for the AdaBoost-enhanced Decision Tree, the number of estimators (`n_estimators`) was varied between 100, 150, and 200, and the learning rate was optimized at 0.3, 0.5, and 0.7. 
 The depth of the base estimator (`estimator__max_depth`) was tested between 5 and 9 to improve the model's capacity to capture complex patterns in the data.
 
+
+
 # Result & Discussions
+
+After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, 
+achieving an accuracy of `{python} round(test_result.loc[2, 'Accuracy'], 4)` for SVM and `{python} round(test_result.loc[0, 'Accuracy'], 4)` for AdaBoost-enhanced Decision Tree. These results from test scores are shown in @tbl-test_result.
+In contrast, KNN, despite its adjustments, achieved a lower accuracy of `{python} round(test_result.loc[1, 'Accuracy'], 4)`.
+This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, 
+and kernel-based methods like SVM, which use a non-linear approach to classify data, 
+are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic. In relation to our research question, effective models have highest accuracy for predicting obesity levels as in healthcare misdiagnosis has severed consequences. KNN performed relatively poor compared our other models as its not well suited for high-dimensional data.
+
 
 ```{python}
 
 #| label: tbl-test_result
-#| tbl-cap: Test result of model performance on test data
+#| tbl-cap: Test result of model performance on test set
 
 Markdown(test_result.to_markdown())
 
 ```
 
-After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of around (INSERT CODE)97%. 
-In contrast, KNN, despite its adjustments, achieved a lower accuracy of (INSERT CODE)89%. 
-This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, 
-and kernel-based methods like SVM, which use a non-linear approach to classify data, 
-are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic.
+
+Given our high scores in AdaBoost and SVM models, using machine learning in obesity diagnosis shows promising potential. As traditional methods, such as BMI, may not always lead to accurate diagnosis, the use of tools that consider multiple features can be of great use for healthcare professionals.  
+
 
 # References
