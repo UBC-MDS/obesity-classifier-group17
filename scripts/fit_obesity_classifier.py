@@ -15,6 +15,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import StratifiedKFold
 
 
 @click.command()
@@ -112,6 +113,7 @@ def main(encoded_train_data, data_to, preprocessor, seed, pipeline_to):
     best_params = {}
     best_scores = {}
     # Hyper paramaters optimization for each model
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed_random_state)
     for name, model in models.items():
         pipeline = Pipeline(steps=[('preprocessor', preprocessor_obj), ('classifier', model)])
         param_grid = {f'classifier__{key}': value for key, value in param_grids[name].items()}
@@ -119,7 +121,7 @@ def main(encoded_train_data, data_to, preprocessor, seed, pipeline_to):
         grid_search = GridSearchCV(
             pipeline,
             param_grid=param_grid,
-            cv=5,
+            cv=cv,
             scoring='accuracy',
             n_jobs=-1
         )
