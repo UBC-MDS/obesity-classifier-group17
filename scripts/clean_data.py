@@ -161,12 +161,15 @@ def main(raw_data, name, data_to, plot_to, html_to):
     check_feat_lab_corr = FeatureLabelCorrelation().add_condition_feature_pps_less_than(0.9)
     check_feat_lab_corr_result = check_feat_lab_corr.run(dataset=ds)
     #check_feat_lab_corr_result.show()
+    if not check_feat_lab_corr_result.passed_conditions():
+        raise ValueError("Feature-Label correlation exceeds the maximum acceptable threshold.")
     # Save the feature-label correlation result as an HTML file
     os.makedirs(html_to, exist_ok=True)
     feature_label_corr_html_path = os.path.join(html_to, "feature_label_correlation.html")
+    if os.path.exists(feature_label_corr_html_path):
+        os.remove(feature_label_corr_html_path)
     check_feat_lab_corr_result.save_as_html(feature_label_corr_html_path)
-    if not check_feat_lab_corr_result.passed_conditions():
-        raise ValueError("Feature-Label correlation exceeds the maximum acceptable threshold.")
+    
     # 11. No anomalous correlations between features/explanatory variables1
     # Code adapted from deepchecks <Feature Feature Correlation>
     # https://docs.deepchecks.com/stable/tabular/auto_checks/data_integrity/plot_feature_feature_correlation.html
@@ -175,6 +178,11 @@ def main(raw_data, name, data_to, plot_to, html_to):
     #check_feat_feat_corr_result.show()
     if not check_feat_feat_corr_result.passed_conditions():
         raise ValueError("Feature-Feature correlation exceeds the maximum acceptable threshold.")
+    os.makedirs(html_to, exist_ok=True)
+    feature_feature_corr_html_path = os.path.join(html_to, "feature_feature_correlation.html")
+    if os.path.exists(feature_feature_corr_html_path):
+        os.remove(feature_feature_corr_html_path)
+    check_feat_feat_corr_result.save_as_html(feature_feature_corr_html_path)
     
     merged_df_cleaned = merged_df.drop_duplicates().dropna(how="all")
     # Check if the directory exists, else create one.
