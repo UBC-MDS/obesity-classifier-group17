@@ -1,4 +1,4 @@
 Best Params,Best CV Accuracy
 "{'classifier__metric': 'manhattan', 'classifier__n_neighbors': 3, 'classifier__weights': 'distance'}",0.8705479452054794
 "{'classifier__C': 100, 'classifier__gamma': 0.01}",0.9547945205479452
-"{'classifier__estimator__max_depth': 7, 'classifier__learning_rate': 0.5, 'classifier__n_estimators': 150}",0.9726027397260275
+"{'classifier__estimator__max_depth': 8, 'classifier__learning_rate': 0.7, 'classifier__n_estimators': 100}",0.9746575342465753

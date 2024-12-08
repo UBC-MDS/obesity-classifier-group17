@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yun Zhou, Zanan Pech, Sepehr Heydarian">
+<meta name="dcterms.date" content="2024-12-06">
+
+<title>Predicting Obesity Level Based on Eating Habits and Physical Condition</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="obesity_level_predictor_report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="obesity_level_predictor_report_files/libs/quarto-html/quarto.js"></script>
+<script src="obesity_level_predictor_report_files/libs/quarto-html/popper.min.js"></script>
+<script src="obesity_level_predictor_report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="obesity_level_predictor_report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="obesity_level_predictor_report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="obesity_level_predictor_report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="obesity_level_predictor_report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="obesity_level_predictor_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="obesity_level_predictor_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#result-discussions" id="toc-result-discussions" class="nav-link" data-scroll-target="#result-discussions">Result &amp; Discussions</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../obesity_level_predictor_report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Predicting Obesity Level Based on Eating Habits and Physical Condition</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yun Zhou, Zanan Pech, Sepehr Heydarian </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 6, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>In this study, we aim to develop a classification model to determine whether an individual is obese and, if so, categorize the level of obesity. This analysis seeks to use supervised machine learning to predict obesity levels in individuals based on features related to lifestyle habits and physical condition. Three machine learning models — K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost — were trained and evaluated for their performance. The results indicate that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy (0.9713 and 0.9793 respectively) making them the most effective models for this classification task. In contrast, KNN exhibited comparatively lower performance, achieving an accuracy of 0.8804, demonstrating its inferiority relative to the other two models in this context. However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application. Despite these limitation, our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals.</p>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Obesity, a complex and seemingly insurmountable public health and medical challenge, has become a global issue with severe negative impacts on both health and the economy <span class="citation" data-cites="world2024primary">(<a href="#ref-world2024primary" role="doc-biblioref">2024</a>)</span>. This condition is associated with various medical and psychological complications, significantly affecting individuals’ health and social well-being. The World Health Organization (WHO) defines obesity as an excessive accumulation of body fat that poses a risk to health <span class="citation" data-cites="world2024primary">(<a href="#ref-world2024primary" role="doc-biblioref">2024</a>)</span>. To implement this definition in practice, body mass index (BMI) — a widely used indicator of body fat — is used as a diagnostic measure to classify obesity <span class="citation" data-cites="world2024primary">(<a href="#ref-world2024primary" role="doc-biblioref">2024</a>)</span>. Those living with obesity often face persistent stigma and discrimination, which further heightens their risk of disease and mortality <span class="citation" data-cites="westbury2023obesity">(<a href="#ref-westbury2023obesity" role="doc-biblioref">Westbury et al. 2023</a>)</span>.</p>
+<p>The dataset we used for our analysis contains 2111 observations from individuals from Mexico, Peru and Colombia, with 16 features related to lifestyle habits, diet, physical activity along with obesity level as the target variable <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544 palechor2019dataset">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>; <a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. The benefit of using this dataset lies in its abundant features which takes many lifestyle factors into account that can be used for classification models. Traditional methods for identifying and managing obesity often rely on clinical measurements like BMI, which, while effective, can be time-consuming and resource-intensive <span class="citation" data-cites="han2006assessment">(<a href="#ref-han2006assessment" role="doc-biblioref">Han, Sattar, and Lean 2006</a>)</span>. Additionally, while BMI is a common diagnostic tool, it has inconsistencies as many factors affect it <span class="citation" data-cites="callahan2023science">(<a href="#ref-callahan2023science" role="doc-biblioref">Callahan et al. 2023</a>)</span>. This highlights the need for additional tools and approaches for obesity diagnosis. Machine learning, a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets <span class="citation" data-cites="zhou2022applications">(<a href="#ref-zhou2022applications" role="doc-biblioref">Zhou, Chen, and Liu 2022</a>)</span>. This brings forth the focus of our research as to why use machine learning as a diagnostic tool for obesity? By leveraging predictive models, machine learning can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity <span class="citation" data-cites="zhou2022applications">(<a href="#ref-zhou2022applications" role="doc-biblioref">Zhou, Chen, and Liu 2022</a>)</span>.</p>
+</section>
+<section id="methods" class="level1">
+<h1>Methods</h1>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>The dataset used is obtained from UC Irvine Machine Learning Repository (<a href="https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition">link here</a>). This dataset was used in work by Fabio Mendoza Palechor and Alexis de la Hoz Manotas <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. This work can be found <a href="https://doi.org/10.1016/j.dib.2019.104344">here</a>. The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>)</span>. This dataset was chosen because it includes wide range of features including lifestyle habits, physical activity and other metrics including age, weight and sex. The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. Additionally, 77% of this dataset was synthetically generated with SMOTE filter to balance the target classes <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544 palechor2019dataset">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>; <a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span> which is one of the limitation as it could introduce bias.</p>
+<p>As part of data validation process, we followed the guidelines outlined in the <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html">data validation chapter</a> of work by <span class="citation" data-cites="chen">Chen (<a href="#ref-chen" role="doc-biblioref">n.d.</a>)</span>. We checked for missing values, duplicated rows, outliers, and ensured data types for each feature are correct. We verified that the categorical features contain valid categories. We identified 24 duplicated rows which were dropped subsequently. We reviewed the distribution of the target variable and found that all classes are within threshold of 20% of the average observations, shown in (<a href="#fig-target_variable_distribution" class="quarto-xref">Figure&nbsp;1</a>). This is in line with the fact that the original dataset was balanced by synthetic generation and SMOTE filter <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. These confirm balance in the target classes, ensuring our data is suited for classification modeling.</p>
+<div id="fig-target_variable_distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-target_variable_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/Data_vali_targ_varib_dist.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-target_variable_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Target Variable Expected Distribution
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="analysis" class="level3">
+<h3 class="anchored" data-anchor-id="analysis">Analysis</h3>
+<p>In this study, we trained three machine learning models — Decision Tree enhanced with AdaBoost, Support Vector Machine (SVM) with an RBF kernel, and K-Nearest Neighbors (KNN) — to predict obesity outcomes. The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. Each model underwent hyperparameter tuning to optimize its predictive capabilities, utilizing a grid search approach to explore various combinations of the hyperparameters. Importantly, our analysis does not focus on predicting a single category of obesity, but considers multiple level for a more comprehensive approach. Additionally, our dataset is balanced and, therefore, our metrics for hyperparameter tuning is accuracy.</p>
+<p>In our analysis, we adapted AdaBoost to mitigate potential overfitting issues in a decision tree model<span class="citation" data-cites="freund1995desicion">(<a href="#ref-freund1995desicion" role="doc-biblioref">Freund and Schapire 1995</a>)</span>. As a comparison we implemented SVM with an RBF kernel and KNN to establish a baseline for our model accuracy.</p>
+<p>For KNN, key hyperparameters such as the number of neighbors (<code>n_neighbors</code>), which were varied from 3 to 9, the weight function (uniform or distance), and the distance metric (euclidean or manhattan) were tested. These adjustments aimed to optimize how KNN classifies data points based on their proximity to others. The SVM model utilized a range of values for the regularization parameter (<code>C</code>), with values of 0.1, 1, 10, and 100 to balance classification error and margin maximization. Additionally, the kernel coefficient (<code>gamma</code>) was adjusted using the options ‘scale’, ‘auto’, and specific numeric values such as 0.01, 0.1, and 1 to control the influence of individual data points. Finally, for the AdaBoost-enhanced Decision Tree, the number of estimators (<code>n_estimators</code>) was varied between 100, 150, and 200, and the learning rate was optimized at 0.3, 0.5, and 0.7. The depth of the base estimator (<code>estimator__max_depth</code>) was tested between 5 and 9 to improve the model’s capacity to capture complex patterns in the data.</p>
+</section>
+</section>
+<section id="result-discussions" class="level1">
+<h1>Result &amp; Discussions</h1>
+<p>After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of 0.9713 for SVM and 0.9793 for AdaBoost-enhanced Decision Tree. These results from test scores are shown in <a href="#tbl-test_result" class="quarto-xref">Table&nbsp;1</a>. In contrast, KNN, despite its adjustments, achieved a lower accuracy of 0.8804. This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, and kernel-based methods like SVM, which use a non-linear approach to classify data, are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic. In relation to our research question, effective models have highest accuracy for predicting obesity levels as in healthcare misdiagnosis has severed consequences. KNN performed relatively poor compared our other models as its not well suited for high-dimensional data.</p>
+<div class="cell" data-execution_count="2">
+<div id="tbl-test_result" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-test_result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Test result of model performance on test set
+</figcaption>
+<div aria-describedby="tbl-test_result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="2">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;"></th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">AdaBoost + Decision Tree</td>
+<td style="text-align: right;">0.979266</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">KNN</td>
+<td style="text-align: right;">0.880383</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">SVM (RBF Kernel)</td>
+<td style="text-align: right;">0.971292</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Given our high scores in AdaBoost and SVM models, using machine learning shows promising potential in enhancing obesity diagnosis. Unlike traditional methods, such as BMI, which may not always lead to the most accurate diagnosis, the use of tools that consider multiple features can be of great use for healthcare professionals. These machine learning models offer a more comprehensive approach as they can identify underlying patterns from various features that traditional diagnosis methods can miss.</p>
+<p>Although these results yield high test scores which indicate that the model generalizes well, limitations in our dataset should be acknowledged. The dataset we used for our analysis had majority of it data synthetically generated. While this technique could address class imbalance, it could lead to potential biases as there may be patterns that do not exist in the actual population. This may result in a less effective performance when applied to real-world unseen data. Another limitation is related to the lack of representation in the dataset as it collected information from three countries only - Mexico, Peru and Colombia. Certain patterns could exist in lifestyle and diet within each of these countries, and considering that all these countries are located in the Americas, the data is not representative of a diverse global population. This geographical limitation may hinder our model’s applicability as a worldwide healthcare tool.</p>
+<p>Future work should focus on validating these models using larger datasets from variety of regions and populations that include features related to lifestyle habits, diet and physical condition. These efforts would ensure broader applicability of machine learning tools in healthcare, specifically in diagnosing levels of obesity.</p>
+</section>
+<section id="references" class="level1 unnumbered">
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-world2024primary" class="csl-entry" role="listitem">
+2024. <em>World Health Organization</em>. World Health Organization. <a href="https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight">https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight</a>.
+</div>
+<div id="ref-callahan2023science" class="csl-entry" role="listitem">
+Callahan, Emily A, National Academies of Sciences Engineering, Medicine, et al. 2023. <span>“The Science, Strengths, and Limitations of Body Mass Index.”</span> In <em>Translating Knowledge of Foundational Drivers of Obesity into Practice: Proceedings of a Workshop Series</em>. National Academies Press (US).
+</div>
+<div id="ref-chen" class="csl-entry" role="listitem">
+Chen, Florencia D’Andrea, Tiffany a. Timbers Joel Ostblom. n.d. <span>“Reproducible and Trustworthy Workflows for Data Science.”</span> <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/">https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/</a>.
+</div>
+<div id="ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" class="csl-entry" role="listitem">
+<span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>.”</span> 2019. UCI Machine Learning Repository.
+</div>
+<div id="ref-freund1995desicion" class="csl-entry" role="listitem">
+Freund, Yoav, and Robert E Schapire. 1995. <span>“A Desicion-Theoretic Generalization of on-Line Learning and an Application to Boosting.”</span> In <em>European Conference on Computational Learning Theory</em>, 23–37. Springer.
+</div>
+<div id="ref-han2006assessment" class="csl-entry" role="listitem">
+Han, Thang S, Naveed Sattar, and Mike Lean. 2006. <span>“Assessment of Obesity and Its Clinical Implications.”</span> <em>Bmj</em> 333 (7570): 695–98.
+</div>
+<div id="ref-palechor2019dataset" class="csl-entry" role="listitem">
+Palechor, Fabio Mendoza, and Alexis De la Hoz Manotas. 2019. <span>“Dataset for Estimation of Obesity Levels Based on Eating Habits and Physical Condition in Individuals from Colombia, Peru and Mexico.”</span> <em>Data in Brief</em> 25: 104344.
+</div>
+<div id="ref-westbury2023obesity" class="csl-entry" role="listitem">
+Westbury, Susannah, Oyinlola Oyebode, Thijs Van Rens, and Thomas M Barber. 2023. <span>“Obesity Stigma: Causes, Consequences, and Potential Solutions.”</span> <em>Current Obesity Reports</em> 12 (1): 10–23.
+</div>
+<div id="ref-zhou2022applications" class="csl-entry" role="listitem">
+Zhou, Xiaobei, Lei Chen, and Hui-Xin Liu. 2022. <span>“Applications of Machine Learning Models to Predict and Prevent Obesity: A Mini-Review.”</span> <em>Frontiers in Nutrition</em> 9: 933130.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

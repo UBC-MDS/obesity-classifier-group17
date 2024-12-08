@@ -83,7 +83,6 @@ python scripts/evaluate_models.py --test-data=data/processed/obesity_test_target
 
 ```
 quarto render report/obesity_level_predictor_report.qmd --to html
-quarto render report/obesity_level_predictor_report.qmd --to pdf
 ```
 
 ## Dependencies
