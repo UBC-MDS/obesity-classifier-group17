@@ -1,6 +1,6 @@
 .PHONY: clean
 
-all: report/count_report.html report/count_report_files
+all: render_report
 
 download_data: 
 	python scripts/download_data.py \
@@ -12,21 +12,21 @@ clean_data: download_data
 		--raw-data='data/raw/ObesityDataSet_raw_data_sinthetic.csv' \
 		--name='ObesityDataSet_processed_data.csv' --data-to="data/processed/" \
 		--plot-to="results/figures" \
-		--html-to="results/htmls
+		--html-to="results/htmls"
 
 split_preprocess_data: clean_data
 	python scripts/clean_data.py \
 		--raw-data='data/raw/ObesityDataSet_raw_data_sinthetic.csv' \
 		--name='ObesityDataSet_processed_data.csv' --data-to="data/processed/" \
 		--plot-to="results/figures" \
-		--html-to="results/htmls
+		--html-to="results/htmls"
 
 eda: split_preprocess_data
 	python scripts/eda.py \
 		--training_data_split=data/processed/obesity_train.csv \
 		--plot_path=results/figures/
 
-fit_obesity_classifier: eda
+fit_obesity_classifier:
 	python scripts/fit_obesity_classifier.py \
 		--encoded-train-data=data/processed/obesity_train_target_encoding.csv \
 		--data-to=results/tables --preprocessor=results/models/obesity_preprocessor.pickle \
