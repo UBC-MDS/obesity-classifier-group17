@@ -53,13 +53,13 @@ python scripts/download_data.py --write_to="data/raw" --name="ObesityDataSet_raw
 3. Clean data and do validation
 
 ```
-python scripts/clean_data.py --raw-data='data/raw/ObesityDataSet_raw_data_sinthetic.csv' --name='ObesityDataSet_processed_data.csv' --data-to="data/processed/" --plot-to="results/figures" --html-to="results/htmls"
+python scripts/clean_data.py --raw-data='data/raw/ObesityDataSet_raw_data_sinthetic.csv' --name='ObesityDataSet_processed_data.csv' --data-to="data/processed/" --plot-to="results/figures"
 ```
 
 4. Split and preprocess data
 
 ```
-python scripts/split_n_preprocess.py --clean-data=data/processed/ObesityDataSet_processed_data.csv --data-to=data/processed --preprocessor-to=results/models --seed=522
+python scripts/split_n_preprocess.py --clean-data=data/processed/ObesityDataSet_processed_data.csv --data-to=data/processed --preprocessor-to=results/models --seed=522 --html-to="results/htmls"
 ```
 
 5. Explanatory Data Analysis
