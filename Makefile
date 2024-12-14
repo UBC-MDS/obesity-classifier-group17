@@ -9,16 +9,18 @@ download_data:
 
 clean_data: download_data
 	python scripts/clean_data.py \
-		--raw-data='data/raw/ObesityDataSet_raw_data_sinthetic.csv' \
-		--name='ObesityDataSet_processed_data.csv' --data-to="data/processed/" \
-		--plot-to="results/figures" \
-		--html-to="results/htmls"
+        --raw-data='data/raw/ObesityDataSet_raw_data_sinthetic.csv' \
+        --name='ObesityDataSet_processed_data.csv' \
+        --data-to="data/processed/" \
+        --plot-to="results/figures"
 
 split_preprocess_data: clean_data
 	python scripts/split_n_preprocess.py \
-		--clean-data=data/processed/ObesityDataSet_processed_data.csv \
-		--data-to=data/processed \
-		--preprocessor-to=results/models --seed=522
+        --clean-data=data/processed/ObesityDataSet_processed_data.csv \
+        --data-to=data/processed \
+        --preprocessor-to=results/models \
+        --seed=522 \
+        --html-to="results/htmls"
 
 eda: split_preprocess_data
 	python scripts/eda.py \
