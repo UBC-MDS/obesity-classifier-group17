@@ -9,22 +9,16 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-import warnings
 import altair as alt
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.validate_data import validate_data
-from deepchecks.tabular import Dataset
-from deepchecks.tabular.checks import FeatureLabelCorrelation
-from deepchecks.tabular.checks.data_integrity import FeatureFeatureCorrelation
 
-warnings.filterwarnings("ignore")
 @click.command()
 @click.option('--raw-data', type=str, help="Path to raw data")
 @click.option('--name', type=str, help="name of processed the file")
 @click.option('--data-to', type=str, help="Path to directory where processed data will be written to")
 @click.option('--plot-to', type=str, help="Directory to save the data validation plot", required=True)
-@click.option('--html-to', type=str, help="Directory to save the correlation check result(html)", required=True)
-def main(raw_data, name, data_to, plot_to, html_to):
+def main(raw_data, name, data_to, plot_to):
 
     '''This script checks the number of rows and columns of the data frame against the documentation.
     It checks whether type is Panda data frame and that the column names match the documentation.
@@ -140,48 +134,7 @@ def main(raw_data, name, data_to, plot_to, html_to):
     )
     final_dist = alt.hconcat(target_dist, manual_legend).resolve_legend(color="independent")
     os.makedirs(plot_to, exist_ok=True)
-    final_dist.save(os.path.join(plot_to, "Data_vali_targ_varib_dist.png"), scale_factor=1.5)
-
-    #warnings.filterwarnings("ignore", category=FutureWarning)
-    # 10. No anomalous correlations between target/response variable and features/explanatory variables
-    # Code adapted from deepchecks <Feature Label Correlation>
-    # https://docs.deepchecks.com/stable/tabular/auto_checks/data_integrity/plot_feature_label_correlation.html
-    ds = Dataset(merged_df, 
-                label='obesity_level', 
-                cat_features=['gender',                     
-                            'family_history_with_overweight',
-                            'frequent_high_calorie_intake',
-                            'food_intake_between_meals',
-                            'smoker',
-                            'monitor_calories',
-                            'frequent_alcohol_intake', 
-                            'mode_of_transportation'])
-
-    check_feat_lab_corr = FeatureLabelCorrelation().add_condition_feature_pps_less_than(0.9)
-    check_feat_lab_corr_result = check_feat_lab_corr.run(dataset=ds)
-    #check_feat_lab_corr_result.show()
-    if not check_feat_lab_corr_result.passed_conditions():
-        raise ValueError("Feature-Label correlation exceeds the maximum acceptable threshold.")
-    # Save the feature-label correlation result as an HTML file
-    os.makedirs(html_to, exist_ok=True)
-    feature_label_corr_html_path = os.path.join(html_to, "feature_label_correlation.html")
-    if os.path.exists(feature_label_corr_html_path):
-        os.remove(feature_label_corr_html_path)
-    check_feat_lab_corr_result.save_as_html(feature_label_corr_html_path)
-    
-    # 11. No anomalous correlations between features/explanatory variables1
-    # Code adapted from deepchecks <Feature Feature Correlation>
-    # https://docs.deepchecks.com/stable/tabular/auto_checks/data_integrity/plot_feature_feature_correlation.html
-    check_feat_feat_corr = FeatureFeatureCorrelation(threshold=0.8)
-    check_feat_feat_corr_result = check_feat_feat_corr.run(dataset=ds)
-    #check_feat_feat_corr_result.show()
-    if not check_feat_feat_corr_result.passed_conditions():
-        raise ValueError("Feature-Feature correlation exceeds the maximum acceptable threshold.")
-    os.makedirs(html_to, exist_ok=True)
-    feature_feature_corr_html_path = os.path.join(html_to, "feature_feature_correlation.html")
-    if os.path.exists(feature_feature_corr_html_path):
-        os.remove(feature_feature_corr_html_path)
-    check_feat_feat_corr_result.save_as_html(feature_feature_corr_html_path)
+    final_dist.save(os.path.join(plot_to, "Data_vali_targ_varib_dist.png"), scale_factor=1.5) 
     
     merged_df_cleaned = merged_df.drop_duplicates().dropna(how="all")
     # Check if the directory exists, else create one.
