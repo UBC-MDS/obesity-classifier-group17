@@ -42,6 +42,8 @@ render_report: evaluate_models
 	quarto render report/obesity_level_predictor_report.qmd --to html
 
 clean:
+	rm -f data/raw/*
+	rm -f data/processed/*
 	rm -f results/figures/*
 	rm -f results/htmls/*
 	rm -f results/tables/*
