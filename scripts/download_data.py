@@ -10,6 +10,8 @@ import os
 import pandas as pd
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.prepare_dataset import prepare_dataset
+
 
 @click.command()
 @click.option('--id', type=int, help="id of the dataset", default=544)
@@ -19,9 +21,7 @@ def main(id, name, write_to):
     """Downloads data from the web to a local filepath."""
 
     result = fetch_ucirepo(id=id)
-    features = result.data.features
-    target = result.data.targets
-    merged_df = pd.concat([features, target], axis=1)    
+    merged_df = prepare_dataset(result)
 
     # Check if the directory exists, else create one.
     os.makedirs(write_to, exist_ok=True)
