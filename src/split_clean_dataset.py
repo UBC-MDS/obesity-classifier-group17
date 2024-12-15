@@ -9,6 +9,8 @@ from sklearn.model_selection import train_test_split
 def split_clean_dataset(df, target_variable, test_size=0.3, random_state=522):
     """
     Uses clean dataset and splits it into train and test sets and returns them as Pandas DataFrames.
+    Also return X data frame, which contains all cleaned data except target column.
+    y_train is also return as a series.
 
     Parameters:
     -----------
