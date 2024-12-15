@@ -36,6 +36,8 @@ def split_clean_dataset(df, target_variable, test_size=0.3, random_state=522):
 
     Raises:
     --------
+    TypeError
+        Raise error if the df input is not a pandas DataFrame
     ValueError
         Raise error if the target column does not exist in the dataset
     Exception
