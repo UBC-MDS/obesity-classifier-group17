@@ -5,7 +5,8 @@ Each section highlights the feedback provided, the state of teh project before t
 
 ## Improvement 1
 
-Our environment.yml file did not list dependencies correctly. We did not specify version directly, but listed it as >=3.5
+Our environment.yml file did not list dependencies correctly. We did not specify version directly, but listed it as >=3.5\
+Improvement by: Sepehr
 
 **Feedback received**
 
@@ -23,15 +24,87 @@ Our environment.yml file did not list dependencies correctly. We did not specify
 Commit change from: [Commit 8210652](https://github.com/UBC-MDS/obesity-classifier-group17/commit/8210652a3081cb35eca308751275b016555b41e4)
 
 
-## 1. Improvement
+## Improvement 2
 
 <Describe>
 
 **Feedback received**
-![photo](path)
+
 
 **Initial state (before improvement)**
-![photo](path)
+
 
 **After improvement**
-![photo](path)
+
+## Improvement 3
+
+<Describe>
+
+**Feedback received**
+
+
+**Initial state (before improvement)**
+
+
+**After improvement**
+
+## Improvement 4
+
+<Describe>
+
+**Feedback received**
+
+
+**Initial state (before improvement)**
+
+
+**After improvement**
+
+## Improvement 5
+
+<Describe>
+
+**Feedback received**
+
+
+**Initial state (before improvement)**
+
+
+**After improvement**
+
+
+## Improvement 6
+
+<Describe>
+
+**Feedback received**
+
+
+**Initial state (before improvement)**
+
+
+**After improvement**
+
+## Improvement 7
+
+<Describe>
+
+**Feedback received**
+
+
+**Initial state (before improvement)**
+
+
+**After improvement**
+
+## Improvement 8
+
+<Describe>
+
+**Feedback received**
+
+
+**Initial state (before improvement)**
+
+
+**After improvement**
