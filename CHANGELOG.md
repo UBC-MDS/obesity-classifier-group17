@@ -8,14 +8,19 @@ Each section highlights the feedback provided, the state of teh project before t
 Our environment.yml file did not list dependencies correctly. We did not specify version directly, but listed it as >=3.5
 
 **Feedback received**
-![Feedback recieved form TA](img/improvement_1_feedback.png)
+
+<img src="img/improvement_1_feedback.png" alt="Feedback received from TA" width="400" />
 
 **Initial state (before improvement)**
-![Environment.yml dependency before](img/improvement_1_before.png)
+
+<img src="img/improvement_1_before.png" alt="Environment.yml dependency before" width="200" />
+
 
 **After improvement**
-![Evidence of change](img/improvement_1_after.png)
-[Commit 8210652](https://github.com/UBC-MDS/obesity-classifier-group17/commit/8210652a3081cb35eca308751275b016555b41e4)
+
+<img src="img/improvement_1_after.png" alt="Evidence of change" width="700" />
+
+Commit change from: [Commit 8210652](https://github.com/UBC-MDS/obesity-classifier-group17/commit/8210652a3081cb35eca308751275b016555b41e4)
 
 
 ## 1. Improvement
