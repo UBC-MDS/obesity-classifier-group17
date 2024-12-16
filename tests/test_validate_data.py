@@ -1,7 +1,9 @@
+# Code template below is adapted from work by Tiffany A. Timbers in breast-cancer-predictor repository:
+# https://github.com/ttimbers/breast-cancer-predictor/blob/3.0.0/tests/test_write_csv.py
+
 import numpy as np
 import pytest
 import pandas as pd
-import pandera
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))

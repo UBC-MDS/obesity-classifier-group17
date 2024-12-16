@@ -1,3 +1,6 @@
+# Code template below is adapted from work by Tiffany A. Timbers in breast-cancer-predictor repository:
+# https://github.com/ttimbers/breast-cancer-predictor/blob/3.0.0/tests/test_write_csv.py
+
 import numpy as np
 import pytest
 import pandas as pd
@@ -47,19 +50,19 @@ def mock_uci_empty_object():
     mock_dataset = MockUCIDataSet([])
     return mock_dataset
 
-
+# Tests expected case
 def test_prepare_dataset_success(mock_uci_object):
     """Test the type of input and shape of the final output."""
     assert isinstance(prepare_dataset(mock_uci_object), pd.DataFrame)
     assert prepare_dataset(mock_uci_object).shape[1] == mock_uci_object.data.features.shape[1] + mock_uci_object.data.targets.shape[1]
 
-
+# Tests error case
 def test_prepare_dataset_empty(mock_uci_empty_object):
     """Test the raised exception when the dataframe is empty."""
     with pytest.raises(ValueError, match="Data is not available."):
         prepare_dataset(mock_uci_empty_object)
 
-
+# Tests edge case
 def test_prepare_dataset_edge_case(mock_uci_object):
     """Test the dataset contains null values and duplicates."""
     assert prepare_dataset(mock_uci_object).shape[0] != prepare_dataset(mock_uci_object).dropna().shape[0]
