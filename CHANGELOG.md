@@ -6,9 +6,10 @@ Each section highlights the feedback provided, the state of teh project before t
 ## Improvement 1
 
 Our `environment.yml` file initially listed dependencies incorrectly. Feedback from TA informed us that we did not pin version directly using `=`, but used `>=` instead.\
-Upon review, a mistake in version specification for `ucimlrepo` was also found (`ucimlrepo==0.0.7` instead of `ucimlrepo=0.0.7`). 
+Upon review, a mistake in version specification for `ucimlrepo` was also found (`ucimlrepo==0.0.7` instead of `ucimlrepo=0.0.7`).
 
 ### Changes made
+
 - Updated `jupyterlab>=3.5` to `jupyterlab=3.5`
 - Updated `pip>=24.2` to `pip=24.2`
 - Updated `ucimlrepo==0.0.7` to `ucimlrepo=0.0.7`
@@ -23,7 +24,6 @@ Improvement by: Sepehr
 
 <img src="img/improvement_1_before.png" alt="Environment.yml dependency before" width="200" />
 
-
 **After improvement**
 
 <img src="img/improvement_1_after.png" alt="Evidence of change" width="700" />
@@ -33,7 +33,6 @@ Improvement by: Sepehr
 Link to commit changes:\
 [Commit 8210652](https://github.com/UBC-MDS/obesity-classifier-group17/commit/8210652a3081cb35eca308751275b016555b41e4)\
 [Commit 82cd5b7](https://github.com/UBC-MDS/obesity-classifier-group17/commit/82cd5b77c53619cad695880a5edc2d8e307e5cc9#diff-9efd195f4e9bfb79ccd456a1d8370fafcc4bcb0b00ea3799222667d2ae818533L20)
-
 
 ## Improvement 2
 
@@ -48,12 +47,14 @@ The following feedback was provided by the TA for Milestone 1 regarding our Summ
 
 **After improvement**
 
-Summary Section:
+Summary Section:\
+
 - Limitation are clearly stated - "However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application".
 - Deeper discussion of impact of work is stated - "our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals".
 - Analysis question mentioned: "**TODO**"
 
-Introduction Section:
+Introduction Section:\
+
 - A short description of the dataset and a brief discussion is now included in introduction. In the Data section under Methods, a more detailed discussion is added to elaborate the strengths and limitations of the dataset. This discussion addresses the TA's feedback regarding why this dataset is chosen.
 - Research question is clearly stated and relevance of input variables is discussed.
 
@@ -120,25 +121,39 @@ Here comes the commit for this improvement: \
 
 <Describe>
 
-**Feedback received**
+The following feedback was provided by the another peer in the another group for Milestone 3.
 
+<img src="img/Improvement_6_PeerFeedback.png" alt="Peer Feedback 6" width="600" />\
 
 **Initial state (before improvement)**
 
+<img src="img/Improvement_6_initial.png" alt="Improvement initial 6" width="600" />\
 
 **After improvement**
+
+We added conda and conda lock version under developer notes section.
+<img src="img/Improvement_6_after.png" alt="Improvement after 6" width="600" />\
+
+Here comes the commit for this improvement: \
+[Commit ccc753a](https://github.com/UBC-MDS/obesity-classifier-group17/commit/ccc753a0bedd99380ce26d3ba501bdf63c5aca38)
 
 ## Improvement 7
 
-<Describe>
+The following feedback was provided by the another peer in the another group for Milestone 3.
 
-**Feedback received**
-
+<img src="img/Improvement_7_PeerFeedback.png" alt="Peer Feedback 7" width="600" />\
 
 **Initial state (before improvement)**
 
+<img src="img/Improvement_7_initial.png" alt="Improvement initial 7" width="600" />\
 
 **After improvement**
+
+We added 2 more distribution plots for categorical and numerical features and a brief summary.
+<img src="img/Improvement_7_after.png" alt="Improvement after 7" width="600" />\
+
+Here comes the commit for this improvement: \
+[Commit 3b33f68](https://github.com/UBC-MDS/obesity-classifier-group17/commit/3b33f68dd6f8a4065f68b97906a04e430c41109a)
 
 ## Improvement 8
 
@@ -146,8 +161,6 @@ Here comes the commit for this improvement: \
 
 **Feedback received**
 
-
 **Initial state (before improvement)**
-
 
 **After improvement**
