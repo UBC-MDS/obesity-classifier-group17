@@ -6,20 +6,28 @@ import pandas as pd
 
 def prepare_distribution_data(df, column):
     """
-    Prepares a DataFrame with actual counts, expected counts, and thresholds 
-    of the response/target column for visualization 
-    (to check if the dataset is balanced).
+    Prepares a DataFrame to check the counts of the categories in the target variable.
+    Actual counts, expected counts, and thresholds are produced for visualization.
+    (This is to check if the dataset is balanced).
 
     Parameters:
-        df (pd.DataFrame): The input DataFrame.
-        column (str): The column name for which to calculate distribution data.
+    ----------
+    df: pd.DataFrame
+        The input DataFrame.
+    column: str
+        The column name for which to calculate the distribution data - specifically the target variable.
 
     Returns:
-        pd.DataFrame: A DataFrame with actual counts, expected counts, and thresholds.
+    --------
+    actual_counts: pd.DataFrame
+        A DataFrame with actual counts, expected counts, and thresholds.
 
     Raises:
-        KeyError: If the specified column does not exist in the DataFrame.
-        ZeroDivisionError: If the DataFrame is empty or the specified column has no unique values.
+    --------
+    KeyError
+        If the specified column does not exist in the DataFrame.
+    ZeroDivisionError
+        If the DataFrame is empty or the specified column has no unique values.
     """
     if column not in df.columns:
         raise KeyError(f"Column '{column}' not found in the DataFrame.")
