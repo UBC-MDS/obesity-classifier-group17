@@ -73,7 +73,7 @@ div.csl-indent {
   <li><a href="#result-discussions" id="toc-result-discussions" class="nav-link" data-scroll-target="#result-discussions">Result &amp; Discussions</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../obesity_level_predictor_report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="..\obesity_level_predictor_report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -123,6 +123,8 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>The dataset used is obtained from UC Irvine Machine Learning Repository (<a href="https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition">link here</a>). This dataset was used in work by Fabio Mendoza Palechor and Alexis de la Hoz Manotas <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. This work can be found <a href="https://doi.org/10.1016/j.dib.2019.104344">here</a>. The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>)</span>. This dataset was chosen because it includes wide range of features including lifestyle habits, physical activity and other metrics including age, weight and sex. The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. Additionally, 77% of this dataset was synthetically generated with SMOTE filter to balance the target classes <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544 palechor2019dataset">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>; <a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span> which is one of the limitation as it could introduce bias.</p>
 <p>As part of data validation process, we followed the guidelines outlined in the <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html">data validation chapter</a> of work by <span class="citation" data-cites="chen">Chen (<a href="#ref-chen" role="doc-biblioref">n.d.</a>)</span>. We checked for missing values, duplicated rows, outliers, and ensured data types for each feature are correct. We verified that the categorical features contain valid categories. We identified 24 duplicated rows which were dropped subsequently. We reviewed the distribution of the target variable and found that all classes are within threshold of 20% of the average observations, shown in (<a href="#fig-target_variable_distribution" class="quarto-xref">Figure&nbsp;1</a>). This is in line with the fact that the original dataset was balanced by synthetic generation and SMOTE filter <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. These confirm balance in the target classes, ensuring our data is suited for classification modeling.</p>
+<p>Analyzing the relationship between numerical features and the target variable, all features display varied distributions, with the weight feature showing a strong correlation to the target, as illustrated in (<a href="#fig-numerical_distribution" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<p>Similarly, the categorical features exhibit diverse distributions, where high calorie intake and a family history of overweight appear to have a significant impact on the target variable, as show in (<a href="#fig-categorical_distribution" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <div id="fig-target_variable_distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-target_variable_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -130,6 +132,26 @@ div.csl-indent {
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-target_variable_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Target Variable Expected Distribution
+</figcaption>
+</figure>
+</div>
+<div id="fig-numerical_distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-numerical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/numeric_feature_distribution.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-numerical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Numerical Feature Target Relationship Distribution
+</figcaption>
+</figure>
+</div>
+<div id="fig-categorical_distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-categorical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/categorical_feat_target_relationship.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-categorical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Categorical Feature Target Relationship Distribution
 </figcaption>
 </figure>
 </div>
@@ -143,7 +165,7 @@ Figure&nbsp;1: Target Variable Expected Distribution
 </section>
 <section id="result-discussions" class="level1">
 <h1>Result &amp; Discussions</h1>
-<p>After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of 0.9713 for SVM and 0.9793 for AdaBoost-enhanced Decision Tree. These results from test scores are shown in <a href="#tbl-test_result" class="quarto-xref">Table&nbsp;1</a>. In contrast, KNN, despite its adjustments, achieved a lower accuracy of 0.8804. This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, and kernel-based methods like SVM, which use a non-linear approach to classify data, are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic. In relation to our research question, effective models have highest accuracy for predicting obesity levels as in healthcare misdiagnosis has severed consequences. KNN performed relatively poor compared our other models as its not well suited for high-dimensional data.</p>
+<p>After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of 0.9793 for SVM and 0.8804 for AdaBoost-enhanced Decision Tree. These results from test scores are shown in <a href="#tbl-test_result" class="quarto-xref">Table&nbsp;1</a>. In contrast, KNN, despite its adjustments, achieved a lower accuracy of 0.9713. This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, and kernel-based methods like SVM, which use a non-linear approach to classify data, are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic. In relation to our research question, effective models have highest accuracy for predicting obesity levels as in healthcare misdiagnosis has severed consequences. KNN performed relatively poor compared our other models as its not well suited for high-dimensional data.</p>
 <div class="cell" data-execution_count="2">
 <div id="tbl-test_result" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -151,30 +173,45 @@ Figure&nbsp;1: Target Variable Expected Distribution
 Table&nbsp;1: Test result of model performance on test set
 </figcaption>
 <div aria-describedby="tbl-test_result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="2">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="4">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 27%">
+<col style="width: 12%">
+<col style="width: 29%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;"></th>
 <th style="text-align: left;">Model</th>
 <th style="text-align: right;">Accuracy</th>
+<th style="text-align: right;">Average Level Precision</th>
+<th style="text-align: right;">Average Level Recall</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">0</td>
-<td style="text-align: left;">AdaBoost + Decision Tree</td>
-<td style="text-align: right;">0.979266</td>
+<td style="text-align: left;">KNN</td>
+<td style="text-align: right;">0.880383</td>
+<td style="text-align: right;">0.877351</td>
+<td style="text-align: right;">0.874469</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">KNN</td>
-<td style="text-align: right;">0.880383</td>
+<td style="text-align: left;">SVM (RBF Kernel)</td>
+<td style="text-align: right;">0.971292</td>
+<td style="text-align: right;">0.969971</td>
+<td style="text-align: right;">0.96991</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">SVM (RBF Kernel)</td>
-<td style="text-align: right;">0.971292</td>
+<td style="text-align: left;">AdaBoost + Decision Tree</td>
+<td style="text-align: right;">0.979266</td>
+<td style="text-align: right;">0.978619</td>
+<td style="text-align: right;">0.978142</td>
 </tr>
 </tbody>
 </table>
