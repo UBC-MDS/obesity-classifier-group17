@@ -63,40 +63,58 @@ These changes were done through series of commits, some are listed below. Howeve
 
 ## Improvement 3
 
-<Describe>
+The following feedback was provided by the peers in the other groups for Milestone 3:
 
-**Feedback received**
+**Feedback received**\
+<img src="img/Improvement_3_PeerFeedback1.jpg" alt="Feedback received from peer1" width="700" />\
+<br>
+<img src="img/Improvement_3_PeerFeedback2.jpg" alt="Feedback received from peer2" width="700" />
 
+**Initial state (before improvement)**\
+<img src="img/Improvement_3_initial.jpg" alt="Improvement Initial" width="300" />\
 
-**Initial state (before improvement)**
-
-
-**After improvement**
+**After improvement**\
+We added precision and recall for the support metrics to evaluate the final model. Because we don't focus on the certai levels in the target, we average the precision and recall scores for all the target levels. \
+<img src="img/Improvement_3_after.jpg" alt="Improvement After" width="600" />\
+<br>
+Here comes the commit for this improvement: \
+[Commit 49908af](https://github.com/UBC-MDS/obesity-classifier-group17/commit/49908afb7786d8b285a232d21f379d1b4096ec4f)
 
 ## Improvement 4
 
-<Describe>
+The following feedback was provided by another peer in the another group for Milestone 3:\
 
-**Feedback received**
+**Feedback received**\
 
+<img src="img/Improvement_4_PeerFeedback1.jpg" alt="Feedback received from peer" width="700" />\
 
-**Initial state (before improvement)**
+**Initial state (before improvement)**\
+<img src="img/Improvement_4_initial.jpg" alt="Improvement Initial" width="600" />\
 
-
-**After improvement**
+**After improvement**\
+We removed all of the duplicate titles for the figures which are already included in description.\
+<img src="img/Improvement_4_after.jpg" alt="Improvement After" width="400" />\
+<br>
+Here comes the commit for this improvement: \
+[Commit 4ba64ac](https://github.com/UBC-MDS/obesity-classifier-group17/commit/4ba64ac55e842ce8c8b137720f1030cfd9bf7830)
 
 ## Improvement 5
 
-<Describe>
+The following feedback was provided by the TA for Milestone 2 regarding our Data Validation section:\
 
-**Feedback received**
+**Feedback received**\
 
+<img src="img/Improvement_5_TAFeedback.jpg" alt="Feedback received from TA" width="350" />\
 
-**Initial state (before improvement)**
-
+**Initial state (before improvement)**\
+<img src="img/Improvement_5_initial.jpg" alt="Improvement Initial" width="600" />\
 
 **After improvement**
-
+We fixed the data leakage issue in data validation correlation check steps. The data set now is the training set after splitting.\
+<img src="img/Improvement_5_after.jpg" alt="Improvement After" width="600" />\
+<br>
+Here comes the commit for this improvement: \
+[Commit 2e759d8](https://github.com/UBC-MDS/obesity-classifier-group17/commit/2e759d83a267b9f85df67cd126feaec12aa12ff0)
 
 ## Improvement 6
 
