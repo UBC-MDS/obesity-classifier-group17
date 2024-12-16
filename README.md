@@ -2,7 +2,7 @@
 
 - author: Yun Zhou, Zanan Pech and Sepehr Heydarian
 
-Milestone 3 for DSCI 522 data workflows project
+DSCI 522 Data Workflows Project
 
 ## About
 
@@ -13,6 +13,11 @@ The dataset used is obtained from UC Irvine Machine Learning Repository - [Link 
 ## Report
 
 The final report can be found [here](https://github.com/UBC-MDS/obesity-classifier-group17/tree/main/report)
+
+
+## Dependencies
+
+[Docker](https://www.docker.com/)
 
 ## Usage
 
@@ -38,7 +43,7 @@ For further work on the environment and updating dependencies use `environment.y
 conda-lock -k explicit --file environment.yml -p linux-64
 ```
 
-Push changes to main and on Github Actions > Publish Docker Image and run the workflow. Find docker tag in new published image and update the `docker-compose.yml`.
+Push changes to main repository and on Github Actions go to Publish Docker Image to run the workflow. Find docker tag in the new published image and update tag in the `docker-compose.yml`.
 
 ## Developer notes
 
@@ -46,6 +51,21 @@ Push changes to main and on Github Actions > Publish Docker Image and run the wo
 
 - `conda` (version 23.9.0 or higher)
 - `conda-lock` (version 2.5.7 or higher)
+
+## Running the analysis using Makefile
+
+- Open Terminal and set working directory to the root of the repository.
+- To reset the project to a clean state (remove all generated files), run the following command from the root directory:
+
+```
+    make clean
+```
+
+- To run the entire analysis, run the following command:
+
+```
+    make all
+```
 
 ## Running the analysis using scripts
 
@@ -92,24 +112,10 @@ python scripts/evaluate_models.py --test-data=data/processed/obesity_test_target
 ```
 quarto render report/obesity_level_predictor_report.qmd --to html
 ```
+## Running Test Cases
 
-## Running the analysis using Makefile
-
-- To reset the project to a clean state (remove all generated files), run the following command from the root directory:
-
-```
-    make clean
-```
-
-- To run the entire analysis, run the following command:
-
-```
-    make all
-```
-
-## Dependencies
-
-[Docker](https://www.docker.com/)
+For this project series of functions were created and used in python scripts. The test files can be found in the `tests` folder in the root of this repository. [Link to test folder.](https://github.com/UBC-MDS/obesity-classifier-group17/tree/main/tests)\
+Instructions are provided to run the the tests to validate the functions in the `README.md` file in the `tests` folder.
 
 ## License
 
