@@ -50,7 +50,7 @@ The following feedback was provided by the TA for Milestone 1 regarding our Summ
 **After improvement**
 
 Summary Section:
-- Limitation are clearly stated - "However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application".
+- Limitations are clearly stated - "However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application".
 - Deeper discussion of impact of work is stated - "our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals".
 - Analysis question mentioned in the summary.
 
@@ -76,6 +76,7 @@ The following feedback was provided by the peers in the other groups for Milesto
 <img src="img/Improvement_3_PeerFeedback2.jpg" alt="Feedback received from peer2" width="800" />
 
 **Initial state (before improvement)**\
+We only included accuracy in our results table.\
 <img src="img/Improvement_3_initial.jpg" alt="Improvement Initial" width="400" />
 
 **After improvement**\
@@ -94,7 +95,7 @@ The following feedback was provided by another peer in the another group for Mil
 
 **Feedback received**
 
-<img src="img/Improvement_4_PeerFeedback1.jpg" alt="Feedback received from peer" width="750" />
+<img src="img/Improvement_4_PeerFeedback1.jpg" alt="Feedback received from peer" width="800" />
 
 **Initial state (before improvement)**\
 <img src="img/Improvement_4_initial.jpg" alt="Improvement Initial" width="600" />
@@ -188,7 +189,7 @@ Following were included in the Method section:
 
 These changes were done through series of commits listed below. As it could be tedious to go through all commits, screenshots of the Method section are available in these paths from the root directory (alternatively, the report html can be viewed instead) to review method section:\
 path for Method - Data screenshot: `img/improvement_8_method_data.png`\
-path for Method - analysis screenshot: `img/improvement_8_method_analysis.png`\
+path for Method - analysis screenshot: `img/improvement_8_method_analysis.png`
 
 Commit link for this improvement:\
 [Commit 06fab17](https://github.com/UBC-MDS/obesity-classifier-group17/commit/06fab17cf6daf96cf4af7490bfad1509d7ac9ba6)\
@@ -204,14 +205,14 @@ Feedback was provided by TA in office hours that after milestone 3 some values i
 
 **Initial state (before improvement)**
 
-<img src="img/improvement_9_initial.png" alt="Improvement 9 Before" width="650" />\
-<img src="img/improvement_9_initial_2.png" alt="Improvement 9 Before 2" width="650" />\
+<img src="img/improvement_9_initial.png" alt="Improvement 9 Before" width="800" />\
+<img src="img/improvement_9_initial_2.png" alt="Improvement 9 Before 2" width="800" />\
 
 **After improvement**
 
-We used inline code to refer to shape of the data frame. This improves accuracy by reducing errors, improved transparency, and promotes reproducibility.
-<img src="img/improvement_9_after.png" alt="Improvement after 9" width="650" />\
-<img src="img/improvement_9_after_2.png" alt="Improvement after 9 2" width="650" />\
+We used inline code to refer to shape of the data frame. This improves accuracy by reducing errors, improves transparency, and promotes reproducibility.\
+<img src="img/improvement_9_after.png" alt="Improvement after 9" width="800" />\
+<img src="img/improvement_9_after_2.png" alt="Improvement after 9 2" width="800" />\
 
 Commit link for this improvement:\
 [Commit 1796b22](https://github.com/UBC-MDS/obesity-classifier-group17/commit/1796b2211a8c9db2e4e87e9bd7f7c97a4a8c41be)
