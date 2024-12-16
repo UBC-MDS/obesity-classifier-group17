@@ -34,19 +34,33 @@ data = [
         ]
 
 
-def test_prepare_dataset_success():
+@pytest.fixture
+def mock_uci_object():
+    """Create a mock uci object using data above."""
     mock_dataset = MockUCIDataSet(data)
-    assert isinstance(prepare_dataset(mock_dataset), pd.DataFrame)
-    assert prepare_dataset(mock_dataset).shape[1] == mock_dataset.data.features.shape[1] + mock_dataset.data.targets.shape[1]
+    return mock_dataset
 
 
-def test_prepare_dataset_empty():
+@pytest.fixture
+def mock_uci_empty_object():
+    """Create a mock uci object without data."""
     mock_dataset = MockUCIDataSet([])
+    return mock_dataset
+
+
+def test_prepare_dataset_success(mock_uci_object):
+    """Test the type of input and shape of the final output."""
+    assert isinstance(prepare_dataset(mock_uci_object), pd.DataFrame)
+    assert prepare_dataset(mock_uci_object).shape[1] == mock_uci_object.data.features.shape[1] + mock_uci_object.data.targets.shape[1]
+
+
+def test_prepare_dataset_empty(mock_uci_empty_object):
+    """Test the raised exception when the dataframe is empty."""
     with pytest.raises(ValueError, match="Data is not available."):
-        prepare_dataset(mock_dataset)
+        prepare_dataset(mock_uci_empty_object)
 
 
-def test_prepare_dataset_edge_case():
-    mock_dataset = MockUCIDataSet(data)
-    assert prepare_dataset(mock_dataset).shape[0] != prepare_dataset(mock_dataset).dropna().shape[0]
-    assert prepare_dataset(mock_dataset).shape[0] != prepare_dataset(mock_dataset).drop_duplicates().shape[0]
+def test_prepare_dataset_edge_case(mock_uci_object):
+    """Test the dataset contains null values and duplicates."""
+    assert prepare_dataset(mock_uci_object).shape[0] != prepare_dataset(mock_uci_object).dropna().shape[0]
+    assert prepare_dataset(mock_uci_object).shape[0] != prepare_dataset(mock_uci_object).drop_duplicates().shape[0]

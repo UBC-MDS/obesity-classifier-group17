@@ -11,9 +11,12 @@ def prepare_dataset(result):
     ----------
     result (object): uci result object.
 
+    Raises:
+        ValueError if data object or its attributes are not available.
+
     Returns:
     ----------
-    pd.DataFrame: A combined DataFrame containing the feature columns and
+    merged_df: A combined DataFrame containing the feature columns and
                     target variable(s) side by side.
     """
 
