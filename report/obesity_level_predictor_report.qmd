@@ -78,7 +78,7 @@ These confirm balance in the target classes, ensuring our data is suited for cla
 
 Analyzing the relationship between numerical features and the target variable, all features display varied distributions, with the weight feature showing a strong correlation to the target, as illustrated in @fig-numerical_distribution.
 
-Similarly, the categorical features exhibit diverse distributions, where high calorie intake and a family history of overweight appear to have a significant impact on the target variable, as show in @fig-categorical_distribution.
+Similarly, the categorical features exhibit diverse distributions, where high calorie intake and a family history of overweight appear to have a significant impact on the target variable, as shown in @fig-categorical_distribution.
 
 ![Target Variable Expected Distribution](../results/figures/Data_vali_targ_varib_dist.png){#fig-target_variable_distribution width=70%}
 
