@@ -50,7 +50,7 @@ The following feedback was provided by the TA for Milestone 1 regarding our Summ
 Summary Section:
 - Limitation are clearly stated - "However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application".
 - Deeper discussion of impact of work is stated - "our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals".
-- Analysis question mentioned: "**TODO**"
+- Analysis question mentioned in the summary.
 
 Introduction Section:
 - A short description of the dataset and a brief discussion is now included in introduction. In the Data section under Methods, a more detailed discussion is added to elaborate the strengths and limitations of the dataset. This discussion addresses the TA's feedback regarding why this dataset is chosen.
