@@ -67,7 +67,7 @@ This dataset was used in work by Fabio Mendoza Palechor and  Alexis de la Hoz Ma
 This work can be found [here](https://doi.org/10.1016/j.dib.2019.104344). 
 The dataset contains `{python} df_raw.shape[0]` observations with `{python} df_raw.shape[1] - 1` features (including one target column - obesity level) from individuals from Mexico, Peru, and Colombia [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544]. This dataset was chosen because it includes wide range of features including lifestyle habits, physical activity and other metrics including age, weight and sex. 
 The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. 
-Additionally, 77% of this dataset was synthetically generated with SMOTE filter to balance the target classes [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544; @palechor2019dataset] which is one of the limitation as it could introduce bias.
+Additionally, 77% of this dataset was synthetically generated with SMOTE filter to balance the target classes [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544; @palechor2019dataset] which is one of the limitation as it could introduce bias by having similar data in both train and test sets leading to overestimation of the models performance.
 
 
 As part of data validation process, we followed the guidelines outlined in the [data validation chapter](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html) of work by @chen.
