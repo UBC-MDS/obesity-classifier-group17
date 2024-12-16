@@ -38,3 +38,10 @@ def test_validate_data_invalid_input_type():
     """Test the raised exception when the input type is invalid."""
     with pytest.raises(ValueError, match="The input object type is not Dataframe."):
         validate_data(1)
+
+
+def test_validate_data_empty_dataframe():
+    """Test the raised exception when the input dataframe is empty"""
+    with pytest.raises(ValueError, match="The input Dataframe is empty."):
+        validate_data(pd.DataFrame())
+

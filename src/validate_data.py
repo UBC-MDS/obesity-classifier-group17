@@ -43,6 +43,10 @@ def validate_data(obesity_df):
     if not isinstance(obesity_df, pd.DataFrame):
         raise ValueError("The input object type is not Dataframe.")
     
+    if obesity_df.shape[1] == 0:
+        raise ValueError("The input Dataframe is empty.")
+
+    
     schema = pa.DataFrameSchema({
         "gender": pa.Column(str, pa.Check.isin(["Female", "Male"])),
         "age": pa.Column(float, pa.Check.between(10, 99), nullable=True),
