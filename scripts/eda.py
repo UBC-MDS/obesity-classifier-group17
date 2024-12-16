@@ -34,7 +34,6 @@ def main(training_data_split, plot_path):
         y=alt.Y('count():Q', title='Count'),
      color=alt.Color('obesity_level')
     ).properties(
-     title='Figure 1. Distribution of Target: Obesity Level',
         width=400,
      height=300
     )
@@ -62,7 +61,6 @@ def main(training_data_split, plot_path):
         ),
      tooltip=['index', 'variable', 'value'] 
     ).properties(
-        title='Figure 2. Numeric Feature Correlation Heatmap',
         width=400,
         height=400
     )
@@ -84,7 +82,6 @@ def main(training_data_split, plot_path):
         color=alt.Color('obesity_level'),
         facet=alt.Facet('variable:N', title='Features', columns=2)  
     ).properties(
-        title='Figure 3. Distribution of Numeric Features by Obesity Level',
         width=200,
         height=200
     ).resolve_scale(
@@ -121,9 +118,7 @@ def main(training_data_split, plot_path):
     rows = [alt.hconcat(*charts[i:i+2]) for i in range(0, len(charts), 2)]
 
     # Combine all rows into a vertical concatenation
-    combined_chart = alt.vconcat(*rows).properties(
-        title="Figure 4. Relationship between Categorical Features and Target"
-    ).configure_title(
+    combined_chart = alt.vconcat(*rows).properties().configure_title(
         fontSize=16,
         anchor='middle',  
         font='Arial'
