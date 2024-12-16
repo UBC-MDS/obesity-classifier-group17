@@ -5,6 +5,8 @@ Each section highlights the feedback provided, the state of the project before t
 
 ## Improvement 1
 
+Improvement by: Sepehr
+
 Our `environment.yml` file initially listed dependencies incorrectly. Feedback from TA informed us that we did not pin version directly using `=`, but used `>=` instead.\
 Upon review, a mistake in version specification for `ucimlrepo` was also found (`ucimlrepo==0.0.7` instead of `ucimlrepo=0.0.7`).
 
@@ -13,8 +15,6 @@ Upon review, a mistake in version specification for `ucimlrepo` was also found (
 - Updated `jupyterlab>=3.5` to `jupyterlab=3.5`
 - Updated `pip>=24.2` to `pip=24.2`
 - Updated `ucimlrepo==0.0.7` to `ucimlrepo=0.0.7`
-
-Improvement by: Sepehr
 
 **Feedback received**
 
@@ -36,6 +36,8 @@ Link to commit changes:\
 
 ## Improvement 2
 
+Improvement by: Sepehr
+
 The following feedback was provided by the TA for Milestone 1 regarding our Summary and Introduction section:
 
 **Feedback received**\
@@ -56,13 +58,15 @@ Introduction Section:
 - A short description of the dataset and a brief discussion is now included in introduction. In the Data section under Methods, a more detailed discussion is added to elaborate the strengths and limitations of the dataset. This discussion addresses the TA's feedback regarding why this dataset is chosen.
 - Research question is clearly stated and relevance of input variables is discussed.
 
-These changes were done through series of commits, some are listed below. However as this could be tedious, screenshots of the summary and introduction section are available in these paths from the root directory (additionally, the report can be viewed instead):\
+These changes were done through series of commits, some are listed below. However as this could be tedious, screenshots of the summary and introduction section are available in these paths from the root directory (Alternatively, the report can be viewed instead):\
 path for Summary screenshot: `img/Improvement_2_Summary.png`\
 path for Introduction screenshot: `img/Improvement_2_Intro.png`\
 [Commit 5288ac1](https://github.com/UBC-MDS/obesity-classifier-group17/commit/5288ac19928446b7f5a633904ec2db7fe985c0a0)\
 [Commit 57a6658](https://github.com/UBC-MDS/obesity-classifier-group17/commit/57a665865f8142ec2cce09f01cb9a2eb51e77f34)
 
 ## Improvement 3
+
+Improvement by: Yun Zhou
 
 The following feedback was provided by the peers in the other groups for Milestone 3:
 
@@ -84,6 +88,8 @@ Commit link for this improvement:\
 
 ## Improvement 4
 
+Improvement by: Yun Zhou
+
 The following feedback was provided by another peer in the another group for Milestone 3:
 
 **Feedback received**
@@ -101,6 +107,8 @@ Commit link for this improvement:\
 [Commit 4ba64ac](https://github.com/UBC-MDS/obesity-classifier-group17/commit/4ba64ac55e842ce8c8b137720f1030cfd9bf7830)
 
 ## Improvement 5
+
+Improvement by: Yun Zhou
 
 The following feedback was provided by the TA for Milestone 2 regarding our Data Validation section and breaking the golden rule:
 
@@ -121,6 +129,8 @@ Commit link for this improvement: \
 
 ## Improvement 6
 
+Improvement by: Zanan
+
 The following feedback was provided through peer reviews after Milestone 3. In the README.md file the instructions for developers did not include `conda-lock` and `conda` as dependencies in case additional dependencies are needed to be added. 
 
 <img src="img/improvement_6_PeerFeedback.png" alt="Peer Feedback 6" width="650" />
@@ -134,6 +144,8 @@ Commit link for this improvement:\
 [Commit ccc753a](https://github.com/UBC-MDS/obesity-classifier-group17/commit/ccc753a0bedd99380ce26d3ba501bdf63c5aca38)
 
 ## Improvement 7
+
+Improvement by: Zanan
 
 The following feedback was provided through peer reviews after Milestone 3. It refers to the lack of visual aids, apart from Figure 1, in our report to communicate more effectively.
 
@@ -153,10 +165,53 @@ Commit link for this improvement:\
 
 ## Improvement 8
 
-<Describe>
+Improvement by: Sepehr
+
+The following feedback was provided by the TA for Milestone 1 regarding the Method section:
 
 **Feedback received**
 
+<img src="img/improvement_8_feedback.png" alt="Feedback received from TA - Method Section" width="300" />\
+
 **Initial state (before improvement)**
 
+As mentioned in the feedback from TA, our Method section lacked clarity regarding metrics used for HP optimization, why dataset was balanced, which features were used in the mode, why synthetic data was generated, and limitation of SMOTE filter.
+
 **After improvement**
+
+Following were included in the Method section:
+- Clearly specified accuracy as a metric for hypterparameter optimization.
+- Mentioned that dataset is balanced and added plot
+- Explained all features were used in model training and why
+- Added explanation why synthetic data was used, emphasizing the need for class balance
+- Clarified SMOTE filter as limitation.
+
+These changes were done through series of commits listed below. As it could be tedious to go through all commits, screenshots of the Method section are available in these paths from the root directory (alternatively, the report html can be viewed instead) to review method section:\
+path for Method - Data screenshot: `img/improvement_8_method_data.png`\
+path for Method - analysis screenshot: `img/improvement_8_method_analysis.png`\
+
+Commit link for this improvement:\
+[Commit 06fab17](https://github.com/UBC-MDS/obesity-classifier-group17/commit/06fab17cf6daf96cf4af7490bfad1509d7ac9ba6)\
+[Commit 844ac5a](https://github.com/UBC-MDS/obesity-classifier-group17/commit/844ac5a6df3735ff7bf7a24244d830e3294a94b0)\
+[Commit 5288ac1](https://github.com/UBC-MDS/obesity-classifier-group17/commit/5288ac19928446b7f5a633904ec2db7fe985c0a0)
+
+
+## Improvement 9
+
+Improvement by: Sepehr
+
+Feedback was provided by TA in office hours that after milestone 3 some values in the report, specifically number of rows and features of the dataset, were hardcoded rather than using inline code. 
+
+**Initial state (before improvement)**
+
+<img src="img/improvement_9_initial.png" alt="Improvement 9 Before" width="650" />\
+<img src="img/improvement_9_initial_2.png" alt="Improvement 9 Before 2" width="650" />\
+
+**After improvement**
+
+We used inline code to refer to shape of the data frame. This improves accuracy by reducing errors, improved transparency, and promotes reproducibility.
+<img src="img/improvement_9_after.png" alt="Improvement after 9" width="650" />\
+<img src="img/improvement_9_after_2.png" alt="Improvement after 9 2" width="650" />\
+
+Commit link for this improvement:\
+[Commit 1796b22](https://github.com/UBC-MDS/obesity-classifier-group17/commit/1796b2211a8c9db2e4e87e9bd7f7c97a4a8c41be)
