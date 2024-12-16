@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yun Zhou, Zanan Pech, Sepehr Heydarian">
-<meta name="dcterms.date" content="2024-12-06">
+<meta name="dcterms.date" content="2024-12-16">
 
 <title>Predicting Obesity Level Based on Eating Habits and Physical Condition</title>
 <style>
@@ -96,7 +96,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 6, 2024</p>
+      <p class="date">December 16, 2024</p>
     </div>
   </div>
   
@@ -110,19 +110,21 @@ div.csl-indent {
 
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>In this study, we aim to develop a classification model to determine whether an individual is obese and, if so, categorize the level of obesity. This analysis seeks to use supervised machine learning to predict obesity levels in individuals based on features related to lifestyle habits and physical condition. Three machine learning models — K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost — were trained and evaluated for their performance. The results indicate that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy (0.9713 and 0.9793 respectively) making them the most effective models for this classification task. In contrast, KNN exhibited comparatively lower performance, achieving an accuracy of 0.8804, demonstrating its inferiority relative to the other two models in this context. However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application. Despite these limitation, our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals.</p>
+<p>In this study, we aim to develop a classification model to determine whether an individual is obese and, if so, categorize the level of obesity. This analysis seeks to use supervised machine learning to predict obesity levels in individuals based on features related to lifestyle habits and physical condition. Our research question is can machine learning be used as a diagnostic tool for obesity? Three machine learning models — K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost — were trained and evaluated for their performance. The results indicate that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy (0.97 and 0.98 respectively) making them the most effective models for this classification task. In contrast, KNN exhibited comparatively lower performance, achieving an accuracy of 0.88, demonstrating its inferiority relative to the other two models in this context. In addition to accuracy, the average precision and average recall were also used as metrics and align with the accuracy results. The best scores are for AdaBoost with average precision and recall of 0.97 and 0.97 respectively. Although our models scored high, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application. Despite these limitation, our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals.</p>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Obesity, a complex and seemingly insurmountable public health and medical challenge, has become a global issue with severe negative impacts on both health and the economy <span class="citation" data-cites="world2024primary">(<a href="#ref-world2024primary" role="doc-biblioref">2024</a>)</span>. This condition is associated with various medical and psychological complications, significantly affecting individuals’ health and social well-being. The World Health Organization (WHO) defines obesity as an excessive accumulation of body fat that poses a risk to health <span class="citation" data-cites="world2024primary">(<a href="#ref-world2024primary" role="doc-biblioref">2024</a>)</span>. To implement this definition in practice, body mass index (BMI) — a widely used indicator of body fat — is used as a diagnostic measure to classify obesity <span class="citation" data-cites="world2024primary">(<a href="#ref-world2024primary" role="doc-biblioref">2024</a>)</span>. Those living with obesity often face persistent stigma and discrimination, which further heightens their risk of disease and mortality <span class="citation" data-cites="westbury2023obesity">(<a href="#ref-westbury2023obesity" role="doc-biblioref">Westbury et al. 2023</a>)</span>.</p>
-<p>The dataset we used for our analysis contains 2111 observations from individuals from Mexico, Peru and Colombia, with 16 features related to lifestyle habits, diet, physical activity along with obesity level as the target variable <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544 palechor2019dataset">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>; <a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. The benefit of using this dataset lies in its abundant features which takes many lifestyle factors into account that can be used for classification models. Traditional methods for identifying and managing obesity often rely on clinical measurements like BMI, which, while effective, can be time-consuming and resource-intensive <span class="citation" data-cites="han2006assessment">(<a href="#ref-han2006assessment" role="doc-biblioref">Han, Sattar, and Lean 2006</a>)</span>. Additionally, while BMI is a common diagnostic tool, it has inconsistencies as many factors affect it <span class="citation" data-cites="callahan2023science">(<a href="#ref-callahan2023science" role="doc-biblioref">Callahan et al. 2023</a>)</span>. This highlights the need for additional tools and approaches for obesity diagnosis. Machine learning, a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets <span class="citation" data-cites="zhou2022applications">(<a href="#ref-zhou2022applications" role="doc-biblioref">Zhou, Chen, and Liu 2022</a>)</span>. This brings forth the focus of our research as to why use machine learning as a diagnostic tool for obesity? By leveraging predictive models, machine learning can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity <span class="citation" data-cites="zhou2022applications">(<a href="#ref-zhou2022applications" role="doc-biblioref">Zhou, Chen, and Liu 2022</a>)</span>.</p>
+<p>The dataset we used for our analysis contains 2087 observations, after duplicated rows were removed. Observations were from individuals from Mexico, Peru and Colombia, with 16 features related to lifestyle habits, diet, physical activity along with obesity level as the target variable <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544 palechor2019dataset">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>; <a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. The benefit of using this dataset lies in its abundant features which takes many lifestyle factors into account that can be used for classification models. Traditional methods for identifying and managing obesity often rely on clinical measurements like BMI, which, while effective, can be time-consuming and resource-intensive <span class="citation" data-cites="han2006assessment">(<a href="#ref-han2006assessment" role="doc-biblioref">Han, Sattar, and Lean 2006</a>)</span>. Additionally, while BMI is a common diagnostic tool, it has inconsistencies as many factors affect it <span class="citation" data-cites="callahan2023science">(<a href="#ref-callahan2023science" role="doc-biblioref">Callahan et al. 2023</a>)</span>. This highlights the need for additional tools and approaches for obesity diagnosis. Machine learning, a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets <span class="citation" data-cites="zhou2022applications">(<a href="#ref-zhou2022applications" role="doc-biblioref">Zhou, Chen, and Liu 2022</a>)</span>. This brings forth the focus of our research as to how can machine learning be as a diagnostic tool for obesity? By leveraging predictive models, machine learning can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity <span class="citation" data-cites="zhou2022applications">(<a href="#ref-zhou2022applications" role="doc-biblioref">Zhou, Chen, and Liu 2022</a>)</span>.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<p>The dataset used is obtained from UC Irvine Machine Learning Repository (<a href="https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition">link here</a>). This dataset was used in work by Fabio Mendoza Palechor and Alexis de la Hoz Manotas <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. This work can be found <a href="https://doi.org/10.1016/j.dib.2019.104344">here</a>. The dataset contains 2111 observations with 16 features (and one target - obesity level) from individuals from Mexico, Peru, and Colombia <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>)</span>. This dataset was chosen because it includes wide range of features including lifestyle habits, physical activity and other metrics including age, weight and sex. The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. Additionally, 77% of this dataset was synthetically generated with SMOTE filter to balance the target classes <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544 palechor2019dataset">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>; <a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span> which is one of the limitation as it could introduce bias.</p>
-<p>As part of data validation process, we followed the guidelines outlined in the <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html">data validation chapter</a> of work by <span class="citation" data-cites="chen">Chen (<a href="#ref-chen" role="doc-biblioref">n.d.</a>)</span>. We checked for missing values, duplicated rows, outliers, and ensured data types for each feature are correct. We verified that the categorical features contain valid categories. We identified 24 duplicated rows which were dropped subsequently. We reviewed the distribution of the target variable and found that all classes are within threshold of 20% of the average observations, shown in (<a href="#fig-target_variable_distribution" class="quarto-xref">Figure&nbsp;1</a>). This is in line with the fact that the original dataset was balanced by synthetic generation and SMOTE filter <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. These confirm balance in the target classes, ensuring our data is suited for classification modeling.</p>
+<p>The dataset used is obtained from UC Irvine Machine Learning Repository (<a href="https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition">link here</a>). This dataset was used in work by Fabio Mendoza Palechor and Alexis de la Hoz Manotas <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. This work can be found <a href="https://doi.org/10.1016/j.dib.2019.104344">here</a>. The dataset contains 2111 observations with 17 features (including one target column - obesity level) from individuals from Mexico, Peru, and Colombia <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>)</span>. This dataset was chosen because it includes wide range of features including lifestyle habits, physical activity and other metrics including age, weight and sex. The obesity level categories are as follows: Insufficient Weight, Normal Weight, Overweight Level I, Overweight Level II, Obesity Type I, Obesity Type II, and Obesity Type III. Additionally, 77% of this dataset was synthetically generated with SMOTE filter to balance the target classes <span class="citation" data-cites="estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544 palechor2019dataset">(<a href="#ref-estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544" role="doc-biblioref"><span>“<span class="nocase">Estimation of Obesity Levels Based On Eating Habits and Physical Condition </span>”</span> 2019</a>; <a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span> which is one of the limitation as it could introduce bias by having similar data in both train and test sets leading to overestimation of the models performance.</p>
+<p>As part of data validation process, we followed the guidelines outlined in the <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/130-data-validation.html">data validation chapter</a> of work by <span class="citation" data-cites="chen">Chen (<a href="#ref-chen" role="doc-biblioref">n.d.</a>)</span>. We checked for missing values, duplicated rows, outliers, and ensured data types for each feature are correct. We verified that the categorical features contain valid categories. We identified 24 duplicated rows which were dropped subsequently. We reviewed the distribution of the target variable and found that all classes are within threshold of 20% of the average observations, shown in <a href="#fig-target_variable_distribution" class="quarto-xref">Figure&nbsp;1</a>. This is in line with the fact that the original dataset was balanced by synthetic generation and SMOTE filter <span class="citation" data-cites="palechor2019dataset">(<a href="#ref-palechor2019dataset" role="doc-biblioref">Palechor and De la Hoz Manotas 2019</a>)</span>. These confirm balance in the target classes, ensuring our data is suited for classification modeling.</p>
+<p>Analyzing the relationship between numerical features and the target variable, all features display varied distributions, with the weight feature showing a strong correlation to the target, as illustrated in <a href="#fig-numerical_distribution" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<p>Similarly, the categorical features exhibit diverse distributions, where high calorie intake and a family history of overweight appear to have a significant impact on the target variable, as show in <a href="#fig-categorical_distribution" class="quarto-xref">Figure&nbsp;3</a>.</p>
 <div id="fig-target_variable_distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-target_variable_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -133,17 +135,37 @@ Figure&nbsp;1: Target Variable Expected Distribution
 </figcaption>
 </figure>
 </div>
+<div id="fig-numerical_distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-numerical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/numeric_feature_distribution.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-numerical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Numerical Feature Target Relationship Distribution
+</figcaption>
+</figure>
+</div>
+<div id="fig-categorical_distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-categorical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/categorical_feat_target_relationship.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-categorical_distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Categorical Feature Target Relationship Distribution
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="analysis" class="level3">
 <h3 class="anchored" data-anchor-id="analysis">Analysis</h3>
-<p>In this study, we trained three machine learning models — Decision Tree enhanced with AdaBoost, Support Vector Machine (SVM) with an RBF kernel, and K-Nearest Neighbors (KNN) — to predict obesity outcomes. The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. Each model underwent hyperparameter tuning to optimize its predictive capabilities, utilizing a grid search approach to explore various combinations of the hyperparameters. Importantly, our analysis does not focus on predicting a single category of obesity, but considers multiple level for a more comprehensive approach. Additionally, our dataset is balanced and, therefore, our metrics for hyperparameter tuning is accuracy.</p>
+<p>In this study, we trained three machine learning models — Decision Tree enhanced with AdaBoost, Support Vector Machine (SVM) with an RBF kernel, and K-Nearest Neighbors (KNN) — to predict obesity outcomes. The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. From our EDA results, all features were used in building these models. As there is no direct evidence that any of the features having collinearity or all unique values, no features were dropped. Each model underwent hyperparameter tuning to optimize its predictive capabilities, utilizing a grid search approach to explore various combinations of the hyperparameters. Importantly, our analysis does not focus on predicting a single category of obesity, but considers multiple level for a more comprehensive approach. Additionally, our dataset is balanced and, therefore, our metrics for hyperparameter tuning is accuracy.</p>
 <p>In our analysis, we adapted AdaBoost to mitigate potential overfitting issues in a decision tree model<span class="citation" data-cites="freund1995desicion">(<a href="#ref-freund1995desicion" role="doc-biblioref">Freund and Schapire 1995</a>)</span>. As a comparison we implemented SVM with an RBF kernel and KNN to establish a baseline for our model accuracy.</p>
 <p>For KNN, key hyperparameters such as the number of neighbors (<code>n_neighbors</code>), which were varied from 3 to 9, the weight function (uniform or distance), and the distance metric (euclidean or manhattan) were tested. These adjustments aimed to optimize how KNN classifies data points based on their proximity to others. The SVM model utilized a range of values for the regularization parameter (<code>C</code>), with values of 0.1, 1, 10, and 100 to balance classification error and margin maximization. Additionally, the kernel coefficient (<code>gamma</code>) was adjusted using the options ‘scale’, ‘auto’, and specific numeric values such as 0.01, 0.1, and 1 to control the influence of individual data points. Finally, for the AdaBoost-enhanced Decision Tree, the number of estimators (<code>n_estimators</code>) was varied between 100, 150, and 200, and the learning rate was optimized at 0.3, 0.5, and 0.7. The depth of the base estimator (<code>estimator__max_depth</code>) was tested between 5 and 9 to improve the model’s capacity to capture complex patterns in the data.</p>
 </section>
 </section>
 <section id="result-discussions" class="level1">
 <h1>Result &amp; Discussions</h1>
-<p>After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of 0.9713 for SVM and 0.9793 for AdaBoost-enhanced Decision Tree. These results from test scores are shown in <a href="#tbl-test_result" class="quarto-xref">Table&nbsp;1</a>. In contrast, KNN, despite its adjustments, achieved a lower accuracy of 0.8804. This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, and kernel-based methods like SVM, which use a non-linear approach to classify data, are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic. In relation to our research question, effective models have highest accuracy for predicting obesity levels as in healthcare misdiagnosis has severed consequences. KNN performed relatively poor compared our other models as its not well suited for high-dimensional data.</p>
+<p>After tuning the hyperparameters, both the SVM and AdaBoost-enhanced Decision Tree models performed exceptionally well, achieving an accuracy of 0.971 for SVM and 0.979 for AdaBoost-enhanced Decision Tree. These results from test scores are shown in <a href="#tbl-test_result" class="quarto-xref">Table&nbsp;1</a>. In contrast, KNN, despite its adjustments, achieved a lower accuracy of 0.88. This performance difference suggests that ensemble methods like AdaBoost, which combine the predictions of multiple models, and kernel-based methods like SVM, which use a non-linear approach to classify data, are more effective in handling the complexities of obesity classification compared to KNN, which relies on simpler distance-based logic. In relation to our research question, effective models have highest accuracy for predicting obesity levels as in healthcare misdiagnosis has severed consequences. KNN performed relatively poor compared our other models as its not well suited for high-dimensional data.</p>
 <div class="cell" data-execution_count="2">
 <div id="tbl-test_result" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -151,30 +173,45 @@ Figure&nbsp;1: Target Variable Expected Distribution
 Table&nbsp;1: Test result of model performance on test set
 </figcaption>
 <div aria-describedby="tbl-test_result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="2">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="4">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 27%">
+<col style="width: 12%">
+<col style="width: 29%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;"></th>
 <th style="text-align: left;">Model</th>
 <th style="text-align: right;">Accuracy</th>
+<th style="text-align: right;">Average Level Precision</th>
+<th style="text-align: right;">Average Level Recall</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">0</td>
-<td style="text-align: left;">AdaBoost + Decision Tree</td>
-<td style="text-align: right;">0.979266</td>
+<td style="text-align: left;">KNN</td>
+<td style="text-align: right;">0.880383</td>
+<td style="text-align: right;">0.877351</td>
+<td style="text-align: right;">0.874469</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">KNN</td>
-<td style="text-align: right;">0.880383</td>
+<td style="text-align: left;">SVM (RBF Kernel)</td>
+<td style="text-align: right;">0.971292</td>
+<td style="text-align: right;">0.969971</td>
+<td style="text-align: right;">0.96991</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">SVM (RBF Kernel)</td>
-<td style="text-align: right;">0.971292</td>
+<td style="text-align: left;">AdaBoost + Decision Tree</td>
+<td style="text-align: right;">0.979266</td>
+<td style="text-align: right;">0.978619</td>
+<td style="text-align: right;">0.978142</td>
 </tr>
 </tbody>
 </table>

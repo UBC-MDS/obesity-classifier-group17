@@ -1,20 +1,22 @@
 # split_n_preprocessor.py
-# author: Yun Zhou
-# date: 2024-12-5
+# author: Yun Zhou, Sepehr Heydarian
+# date: 2024-12-15
 
 import click
 import os
+import sys
 import pickle
-import numpy as np
 import pandas as pd
 import warnings
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
 from sklearn.compose import ColumnTransformer
 from deepchecks.tabular import Dataset
 from deepchecks.tabular.checks import FeatureLabelCorrelation
 from deepchecks.tabular.checks.data_integrity import FeatureFeatureCorrelation
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.split_clean_dataset import split_clean_dataset
 
 warnings.filterwarnings("ignore")
 @click.command()
@@ -31,21 +33,10 @@ def main(clean_data, data_to, preprocessor_to, seed, html_to):
     # Set random state
     seed_random_state = seed
 
-    # Input data
+    # Input data and split using split_clean_dataset function from src folder
     merged_df = pd.read_csv(clean_data)
-    X = merged_df.drop('obesity_level', axis=1)
-    y = merged_df['obesity_level']
 
-    # Split data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=seed_random_state, stratify=y)
-   
-    X_train_df = pd.DataFrame(X_train, columns=X.columns)  
-    y_train_df = pd.DataFrame(y_train, columns=['obesity_level'])
-    train_df = pd.concat([X_train_df, y_train_df], axis=1)
-
-    X_test_df = pd.DataFrame(X_test, columns=X.columns)  
-    y_test_df = pd.DataFrame(y_test, columns=['obesity_level'])
-    test_df = pd.concat([X_test_df, y_test_df], axis=1)
+    train_df, test_df, X, y_train = split_clean_dataset(df=merged_df, target_variable="obesity_level", test_size=0.3, random_state=seed_random_state)
 
     # 10. No anomalous correlations between target/response variable and features/explanatory variables
     # Code adapted from deepchecks <Feature Label Correlation>

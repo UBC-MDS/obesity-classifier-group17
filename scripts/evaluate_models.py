@@ -6,7 +6,7 @@ import os
 import pickle
 import pandas as pd
 import altair as alt
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 import click
 
 @click.command()
@@ -24,27 +24,36 @@ def main(test_data, pipeline_path, data_to, plot_to):
     with open(pipeline_path, 'rb') as f:
         trained_pipelines = pickle.load(f)
     # Evaluate models on the test set
-    test_results = {}
+    test_results = []
     for name, pipeline in trained_pipelines.items():
         y_pred = pipeline.predict(test_df.drop('obesity_level', axis=1))
         # Evaluate performance
         accuracy = accuracy_score(test_df['obesity_level'], y_pred)
-        test_results[name] = {
-            "Accuracy": accuracy
-        }
+        precision = precision_score(test_df['obesity_level'], y_pred, average=None)  # Per class
+        recall = recall_score(test_df['obesity_level'], y_pred, average=None)  # Per class
+        # Calculate average Precision and Recall
+        avg_precision = precision.mean()
+        avg_recall = recall.mean()
+        # Save the metrics
+        test_results.append({
+            "Model": name,
+            "Accuracy": accuracy,
+            "Average Level Precision": avg_precision,
+            "Average Level Recall": avg_recall
+        })
+    
     # Convert test_results to a DataFrame
-    test_results_df = pd.DataFrame.from_dict(test_results, orient='index').reset_index()
-    test_results_df.columns = ['Model', 'Accuracy']
+    test_results_df = pd.DataFrame(test_results)
+
     # Save results to CSV
     os.makedirs(data_to, exist_ok=True)
     results_csv_path = os.path.join(data_to, "test_results.csv")
     test_results_df.to_csv(results_csv_path, index=False)
-    
 
-    # Visualization of model performance
+    # Visualization of model performance (optional)
     results_data = pd.DataFrame({
-        'Model': list(test_results.keys()),
-        'Accuracy': [result['Accuracy'] for result in test_results.values()]
+        'Model': test_results_df['Model'],
+        'Accuracy': test_results_df['Accuracy']
     })
     # Create bar chart for comparison
     bar_chart = alt.Chart(results_data).mark_bar().encode(
@@ -63,7 +72,6 @@ def main(test_data, pipeline_path, data_to, plot_to):
     )
     # Combine the bar chart with the text labels
     final_chart_with_text = (bar_chart + text).properties(
-        title='Figure 5. Model Performance Comparison',
         width=600,
         height=400
     ).configure_axis(
