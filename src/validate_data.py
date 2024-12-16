@@ -5,7 +5,7 @@
 # date: 2024-12-06
 
 import pandera as pa
-
+import pandas as pd
 
 def validate_data(obesity_df):
 
@@ -36,7 +36,12 @@ def validate_data(obesity_df):
     ----------
     pandera.errors.SchemaError
         Error is raised if one of the checks is failed.
+    ValueError
+        Error is raised if input object type is not Dataframe.
     """
+
+    if not isinstance(obesity_df, pd.DataFrame):
+        raise ValueError("The input object type is not Dataframe.")
     
     schema = pa.DataFrameSchema({
         "gender": pa.Column(str, pa.Check.isin(["Female", "Male"])),
