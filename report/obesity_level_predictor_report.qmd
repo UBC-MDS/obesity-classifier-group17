@@ -1,7 +1,7 @@
 ---
 title: Predicting Obesity Level Based on Eating Habits and Physical Condition
 author: Yun Zhou, Zanan Pech, Sepehr Heydarian
-date: "2024/12/06"
+date: "2024/12/16"
 jupyter: python3
 format:
     html:
@@ -32,7 +32,7 @@ df = pd.read_csv("../data/processed/ObesityDataSet_processed_data.csv")
 # Summary
 
 In this study, we aim to develop a classification model to determine whether an individual is obese and, if so, categorize the level of obesity. 
-This analysis seeks to use supervised machine learning to predict obesity levels in individuals based on features related to lifestyle habits and physical condition.
+This analysis seeks to use supervised machine learning to predict obesity levels in individuals based on features related to lifestyle habits and physical condition. Our research question is can machine learning be used as a diagnostic tool for obesity?
 Three machine learning models — K-Nearest Neighbors (KNN), Support Vector Machine (SVM), and Decision Tree enhanced with AdaBoost — were trained and evaluated for their performance. 
 The results indicate that SVM and the Decision Tree with AdaBoost achieved high predictive accuracy (`{python} round(test_result.loc[1, 'Accuracy'], 4)` and `{python} round(test_result.loc[2, 'Accuracy'], 4)` respectively) making them the most effective models for this classification task. 
 In contrast, KNN exhibited comparatively lower performance, achieving an accuracy of `{python} round(test_result.loc[0, 'Accuracy'], 4)`, demonstrating its inferiority relative to the other two models in this context. 
@@ -48,11 +48,11 @@ The World Health Organization (WHO) defines obesity as an excessive accumulation
 To implement this definition in practice, body mass index (BMI) — a widely used indicator of body fat — is used as a diagnostic measure to classify obesity [@world2024primary]. 
 Those living with obesity often face persistent stigma and discrimination, which further heightens their risk of disease and mortality [@westbury2023obesity].
 
-The dataset we used for our analysis contains 2111 observations from individuals from Mexico, Peru and Colombia, with 16 features related to lifestyle habits, diet, physical activity along with obesity level as the target variable [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544; @palechor2019dataset]. 
+The dataset we used for our analysis contains `{python} df.shape[0]` observations, after duplicated rows were removed, from individuals from Mexico, Peru and Colombia, with `{python} df.shape[1] - 2 # -2 to remove index and target columns` features related to lifestyle habits, diet, physical activity along with obesity level as the target variable [@estimation_of_obesity_levels_based_on_eating_habits_and_physical_condition__544; @palechor2019dataset]. 
 The benefit of using this dataset lies in its abundant features which takes many lifestyle factors into account that can be used for classification models.
 Traditional methods for identifying and managing obesity often rely on clinical measurements like BMI, which, while effective, can be time-consuming and resource-intensive [@han2006assessment]. Additionally, while BMI is a common diagnostic tool, it has inconsistencies as many factors affect it [@callahan2023science].
 This highlights the need for additional tools and approaches for obesity diagnosis.
-Machine learning, a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets [@zhou2022applications]. This brings forth the focus of our research as to why use machine learning as a diagnostic tool for obesity?
+Machine learning, a subset of artificial intelligence, has emerged as a promising tool in healthcare, capable of analyzing complex patterns in large datasets [@zhou2022applications]. This brings forth the focus of our research as to how can machine learning be as a diagnostic tool for obesity?
 By leveraging predictive models, machine learning can enhance the detection and management of obesity by identifying at-risk individuals, uncovering hidden risk factors, and enabling personalized interventions; 
 this approach not only streamlines the diagnostic process but also opens the door to more accurate and scalable solutions for tackling obesity [@zhou2022applications].
 
