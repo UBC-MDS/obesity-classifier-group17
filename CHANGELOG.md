@@ -12,7 +12,7 @@ Upon review, a mistake in version specification for `ucimlrepo` was also found (
 
 ### Changes made
 
-- Updated `jupyterlab>=3.5` to `jupyterlab=3.5`
+- Updated `jupyterlab>=3.5` to `jupyterlab=3.5`, but removed this dependency as it is redundant.
 - Updated `pip>=24.2` to `pip=24.2`
 - Updated `ucimlrepo==0.0.7` to `ucimlrepo=0.0.7`
 
@@ -33,6 +33,7 @@ Upon review, a mistake in version specification for `ucimlrepo` was also found (
 Link to commit changes:\
 [Commit 8210652](https://github.com/UBC-MDS/obesity-classifier-group17/commit/8210652a3081cb35eca308751275b016555b41e4)\
 [Commit 82cd5b7](https://github.com/UBC-MDS/obesity-classifier-group17/commit/82cd5b77c53619cad695880a5edc2d8e307e5cc9#diff-9efd195f4e9bfb79ccd456a1d8370fafcc4bcb0b00ea3799222667d2ae818533L20)
+[Commit 99889d7](https://github.com/UBC-MDS/obesity-classifier-group17/commit/99889d7948a44595cc42ab6dd2a38c10f73aa51c)
 
 ## Improvement 2
 
