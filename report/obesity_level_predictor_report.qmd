@@ -90,7 +90,7 @@ Similarly, the categorical features exhibit diverse distributions, where high ca
 ### Analysis
 
 In this study, we trained three machine learning models — Decision Tree enhanced with AdaBoost, Support Vector Machine (SVM) with an RBF kernel, and K-Nearest Neighbors (KNN) — to predict obesity outcomes. 
-The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. 
+The dataset was divided into training (70%) and testing (30%) sets to ensure reliable evaluation of model performance. From our EDA results, all features were used in building these models. As there is no direct evidence that any of the features having collinearity or all unique values, no features were dropped.
 Each model underwent hyperparameter tuning to optimize its predictive capabilities, utilizing a grid search approach to explore various combinations of the hyperparameters. Importantly, our analysis does not focus on predicting a single category of obesity, but considers multiple level for a more comprehensive approach. Additionally, our dataset is balanced and, therefore, our metrics for hyperparameter tuning is accuracy.
 
 In our analysis, we adapted AdaBoost to mitigate potential overfitting issues in a decision tree model[@freund1995desicion]. 
