@@ -28,7 +28,7 @@ Improvement by: Sepehr
 
 <img src="img/improvement_1_after.png" alt="Evidence of change" width="700" />
 
-<img src="img/improvement_1_after(2).png" alt="Evidence of change" width="700" />
+<img src="img/improvement_1_after_2.png" alt="Evidence of change" width="700" />
 
 Link to commit changes:\
 [Commit 8210652](https://github.com/UBC-MDS/obesity-classifier-group17/commit/8210652a3081cb35eca308751275b016555b41e4)\
@@ -40,20 +40,20 @@ Link to commit changes:\
 The following feedback was provided by the TA for Milestone 1 regarding our Summary and Introduction section:
 
 **Feedback received**\
-<img src="img/Improvement_2_TA_feedback_summary.png" alt="Feedback received from TA - Summary Section" width="400" />\
-<img src="img/Improvement_2_TA_feedback_introduction.png" alt="Feedback received from TA - Introduction Section" width="400" />
+<img src="img/Improvement_2_TA_feedback_summary.png" alt="Feedback received from TA - Summary Section" width="300" />\
+<img src="img/Improvement_2_TA_feedback_introduction.png" alt="Feedback received from TA - Introduction Section" width="300" />
 
 **Initial state (before improvement)**\
-<img src="img/Improvement_2_before.png" alt="Summary and Introduction Section of Report" width="200" />
+<img src="img/Improvement_2_before.png" alt="Summary and Introduction Section of Report" width="600" />
 
 **After improvement**
 
-Summary Section:\
+Summary Section:
 - Limitation are clearly stated - "However, large portion of the dataset used in our analysis was synthetically created, while ensuring a balance dataset, this may introduce potential biases. Additionally, the data was collected from only three countries and would benefit to have data from more a diverse global population for a broader application".
 - Deeper discussion of impact of work is stated - "our results show promising potential for application of machine learning in obesity diagnosis to aid healthcare professionals".
 - Analysis question mentioned: "**TODO**"
 
-Introduction Section:\
+Introduction Section:
 - A short description of the dataset and a brief discussion is now included in introduction. In the Data section under Methods, a more detailed discussion is added to elaborate the strengths and limitations of the dataset. This discussion addresses the TA's feedback regarding why this dataset is chosen.
 - Research question is clearly stated and relevance of input variables is discussed.
 
@@ -71,28 +71,28 @@ The following feedback was provided by the peers in the other groups for Milesto
 <img src="img/Improvement_3_PeerFeedback2.jpg" alt="Feedback received from peer2" width="700" />
 
 **Initial state (before improvement)**\
-<img src="img/Improvement_3_initial.jpg" alt="Improvement Initial" width="300" />\
+<img src="img/Improvement_3_initial.jpg" alt="Improvement Initial" width="300" />
 
 **After improvement**\
-We added precision and recall for the support metrics to evaluate the final model. Because we don't focus on the certai levels in the target, we average the precision and recall scores for all the target levels. \
-<img src="img/Improvement_3_after.jpg" alt="Improvement After" width="600" />\
+We added precision and recall for the support metrics to evaluate the final model. Because we don't focus on the certain levels in the target, we average the precision and recall scores for all the target levels. \
+<img src="img/Improvement_3_after.jpg" alt="Improvement After" width="600" />
 <br>
 Here comes the commit for this improvement: \
 [Commit 49908af](https://github.com/UBC-MDS/obesity-classifier-group17/commit/49908afb7786d8b285a232d21f379d1b4096ec4f)
 
 ## Improvement 4
 
-The following feedback was provided by another peer in the another group for Milestone 3:\
+The following feedback was provided by another peer in the another group for Milestone 3:
 
-**Feedback received**\
+**Feedback received**
 
-<img src="img/Improvement_4_PeerFeedback1.jpg" alt="Feedback received from peer" width="700" />\
+<img src="img/Improvement_4_PeerFeedback1.jpg" alt="Feedback received from peer" width="700" />
 
 **Initial state (before improvement)**\
-<img src="img/Improvement_4_initial.jpg" alt="Improvement Initial" width="600" />\
+<img src="img/Improvement_4_initial.jpg" alt="Improvement Initial" width="600" />
 
 **After improvement**\
-We removed all of the duplicate titles for the figures which are already included in description.\
+We removed all of the duplicate titles for the figures which are already included in description.
 <img src="img/Improvement_4_after.jpg" alt="Improvement After" width="400" />\
 <br>
 Here comes the commit for this improvement: \
@@ -100,14 +100,14 @@ Here comes the commit for this improvement: \
 
 ## Improvement 5
 
-The following feedback was provided by the TA for Milestone 2 regarding our Data Validation section:\
+The following feedback was provided by the TA for Milestone 2 regarding our Data Validation section:
 
-**Feedback received**\
+**Feedback received**
 
-<img src="img/Improvement_5_TAFeedback.jpg" alt="Feedback received from TA" width="350" />\
+<img src="img/Improvement_5_TAFeedback.jpg" alt="Feedback received from TA" width="350" />
 
 **Initial state (before improvement)**\
-<img src="img/Improvement_5_initial.jpg" alt="Improvement Initial" width="600" />\
+<img src="img/Improvement_5_initial.jpg" alt="Improvement Initial" width="600" />
 
 **After improvement**
 We fixed the data leakage issue in data validation correlation check steps. The data set now is the training set after splitting.\
