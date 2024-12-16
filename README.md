@@ -40,6 +40,13 @@ conda-lock -k explicit --file environment.yml -p linux-64
 
 Push changes to main and on Github Actions > Publish Docker Image and run the workflow. Find docker tag in new published image and update the `docker-compose.yml`.
 
+## Developer notes
+
+### Developer dependencies
+
+- `conda` (version 23.9.0 or higher)
+- `conda-lock` (version 2.5.7 or higher)
+
 ## Running the analysis using scripts
 
 1. Open Terminal and set working directory to the root of the repository and run the following commands.
