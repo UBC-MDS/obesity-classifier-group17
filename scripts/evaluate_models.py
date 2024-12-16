@@ -72,7 +72,6 @@ def main(test_data, pipeline_path, data_to, plot_to):
     )
     # Combine the bar chart with the text labels
     final_chart_with_text = (bar_chart + text).properties(
-        title='Figure 5. Model Performance Comparison',
         width=600,
         height=400
     ).configure_axis(

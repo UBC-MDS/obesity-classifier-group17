@@ -115,7 +115,6 @@ def main(raw_data, name, data_to, plot_to):
     target_dist = alt.layer(
         expected_dist, actual_dist, error_bar, ticks
     ).properties(
-        title='Target Variable vs Expected Distribution',
         width=400,
         height=300
     )
