@@ -1,4 +1,4 @@
-# Code template referred from work by Tiffany A. Timbers in breast-cancer-predictor repository:
+# Code template adapted is from work by Tiffany A. Timbers in breast-cancer-predictor repository:
 # https://github.com/ttimbers/breast-cancer-predictor/blob/3.0.0/tests/test_write_csv.py
 
 import pytest
