@@ -12,6 +12,7 @@ import pandas as pd
 import altair as alt
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.validate_data import validate_data
+from src.target_distribution import prepare_distribution_data
 
 @click.command()
 @click.option('--raw-data', type=str, help="Path to raw data")
@@ -75,13 +76,7 @@ def main(raw_data, name, data_to, plot_to):
 
     # 9. Target/response variable follows expected distribution
     # Use Altair for visualization
-    actual_counts = merged_df['obesity_level'].value_counts().reset_index()
-    actual_counts.columns = ['obesity_level', 'count']
-    expect_counts = merged_df.shape[0] / merged_df['obesity_level'].nunique()
-    actual_counts['expected'] = expect_counts
-    # Add threshold +/-60
-    actual_counts['expected_lower'] = actual_counts['expected'] - 60
-    actual_counts['expected_upper'] = actual_counts['expected'] + 60
+    actual_counts = prepare_distribution_data(merged_df, 'obesity_level')
     actual_dist = alt.Chart(actual_counts).mark_bar(color='steelblue', opacity=0.6).encode(
         x=alt.X('obesity_level:N', title='Obesity Level'),
         y=alt.Y('count:Q', title='Count'),
