@@ -95,7 +95,7 @@ The following feedback was provided by another peer in the another group for Mil
 
 **After improvement**\
 We removed all of the duplicate titles for the figures which are already included in description.
-<img src="img/Improvement_4_after.png" alt="Improvement After" width="400" />\
+<img src="img/Improvement_4_after.png" alt="Improvement After" width="600" />\
 <br>
 Commit link for this improvement:\
 [Commit 4ba64ac](https://github.com/UBC-MDS/obesity-classifier-group17/commit/4ba64ac55e842ce8c8b137720f1030cfd9bf7830)
@@ -123,12 +123,12 @@ Commit link for this improvement: \
 
 The following feedback was provided through peer reviews after Milestone 3. In the README.md file the instructions for developers did not include `conda-lock` and `conda` as dependencies in case additional dependencies are needed to be added. 
 
-<img src="img/improvement_6_PeerFeedback.png" alt="Peer Feedback 6" width="600" />
+<img src="img/improvement_6_PeerFeedback.png" alt="Peer Feedback 6" width="650" />
 
 **After improvement**
 
 We added `conda` and `conda-lock` version under developer notes section.
-<img src="img/improvement_6_after.png" alt="Improvement after 6" width="600" />
+<img src="img/improvement_6_after.png" alt="Improvement after 6" width="650" />
 
 Commit link for this improvement:\
 [Commit ccc753a](https://github.com/UBC-MDS/obesity-classifier-group17/commit/ccc753a0bedd99380ce26d3ba501bdf63c5aca38)
@@ -137,7 +137,7 @@ Commit link for this improvement:\
 
 The following feedback was provided through peer reviews after Milestone 3. It refers to the lack of visual aids, apart from Figure 1, in our report to communicate more effectively.
 
-<img src="img/improvement_7_PeerFeedback.png" alt="Peer Feedback 7" width="600" />
+<img src="img/improvement_7_PeerFeedback.png" alt="Peer Feedback 7" width="650" />
 
 **Initial state (before improvement)**
 
@@ -146,7 +146,7 @@ Initially, we only had Figure 1, which referred to the class distribution of the
 **After improvement**
 
 We added 2 more distribution plots for categorical and numerical features and a brief summary. The plots were generated through our EDA.
-<img src="img/Improvement_7_after.png" alt="Improvement after 7" width="600" />\
+<img src="img/Improvement_7_after.png" alt="Improvement after 7" width="650" />\
 
 Commit link for this improvement:\
 [Commit 3b33f68](https://github.com/UBC-MDS/obesity-classifier-group17/commit/3b33f68dd6f8a4065f68b97906a04e430c41109a)
